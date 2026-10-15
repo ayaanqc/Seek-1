@@ -37,9 +37,9 @@ export default function BookCard({ book }: { book: Book }) {
           {book.format} &middot; {formatYear(book.year)} &middot; {book.pages}p
         </p>
 
-        <div className="mt-3 flex items-center justify-between gap-2 border-t border-line pt-3">
-          <span className="font-mono text-[15px] font-semibold text-terracotta">{formatPrice(book.price)}</span>
-          <div className="flex items-center gap-2">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-2 border-t border-line pt-3">
+          <span className="font-mono text-[14px] font-semibold text-terracotta">{formatPrice(book.price)}</span>
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={() => setReaderId(book.id)}
@@ -51,7 +51,7 @@ export default function BookCard({ book }: { book: Book }) {
             <button
               type="button"
               onClick={() => add(book.id)}
-              className="inline-flex items-center gap-1 rounded-md border border-ink bg-ink px-2.5 py-1.5 text-[11px] font-medium text-paper transition-colors hover:border-terracotta hover:bg-terracotta"
+              className="inline-flex items-center gap-1 rounded-md border border-ink bg-ink px-2 py-1.5 text-[11px] font-medium text-paper transition-colors hover:border-terracotta hover:bg-terracotta"
             >
               Buy now
               <ArrowRight size={13} aria-hidden />
