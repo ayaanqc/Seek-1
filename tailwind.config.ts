@@ -12,12 +12,19 @@ const config: Config = {
         paper: "#FBFBF9",
         card: "#F3F3EE",
         wash: "#ECECE6",
+        cream: "#F4EFE5",
         ink: "#1F1E1D",
         graphite: "#6B6964",
         muted: "#9A9892",
         terracotta: {
           DEFAULT: "#C96442",
           deep: "#BC544B",
+        },
+        // Deep aubergine — the bookshop's evening colour, used for the hero and salon bands.
+        plum: {
+          DEFAULT: "#5B3141",
+          deep: "#42242F",
+          soft: "#7C4A5B",
         },
         amberwarm: "#D97706",
         line: "#E5E5DE",
@@ -32,6 +39,7 @@ const config: Config = {
       },
       boxShadow: {
         book: "0 1px 2px rgba(31,30,29,0.06), 0 8px 24px -12px rgba(31,30,29,0.18)",
+        cover: "0 22px 48px -22px rgba(15,10,12,0.55), 0 2px 6px rgba(15,10,12,0.25)",
       },
     },
   },

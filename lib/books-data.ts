@@ -1,329 +1,445 @@
 import type { Book } from "./types";
+import {
+  MEDITATIONS,
+  WALDEN,
+  LEAVES_OF_GRASS,
+  SOULS_OF_BLACK_FOLK,
+  THE_PROPHET,
+  EXCERPT_CREDITS,
+} from "./excerpts";
 
+/**
+ * A curated shelf of real books.
+ *
+ * ISBNs and cover art come from the Open Library Covers API, so they identify
+ * real print editions (the cover art and the ISBN may occasionally belong to
+ * different printings of the same title). Prices, stock and the shop itself are
+ * fictional.
+ *
+ * `reading.kind` is "excerpt" only where the text is verifiably in the public
+ * domain and the passage is reproduced verbatim from Project Gutenberg. For
+ * everything still in copyright we write our own note instead of inventing a
+ * quotation, and the UI says which is which.
+ */
 export const BOOKS: Book[] = [
   {
-    id: "architecture-of-silence",
-    slug: "architecture-of-silence",
-    title: "The Architecture of Silence",
-    author: "Elena Marchetti",
+    id: "orbital",
+    slug: "orbital",
+    title: "Orbital",
+    author: "Samantha Harvey",
     year: 2023,
-    price: 34,
-    coverUrl: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80&auto=format&fit=crop",
-    category: "Architecture",
-    isbn: "978-1-64729-041-2",
-    pages: 312,
-    format: "Hardcover",
-    publisher: "Marginalia Press",
-    synopsis: "A meditative survey of quiet rooms, cloisters, and reading chambers — how built stillness shapes thought. Marchetti pairs measured drawings with field notes from fourteen cities.",
-    excerpt: [
-      "We entered the chapel at noon, when the light stands directly overhead and refuses to perform. There was no spectacle to photograph, only a proportion to inhabit. The walls did not ask to be admired. They asked to be kept company.",
-      "Silence, in architecture, is not the absence of sound. It is the presence of room. A corridor that does not hurry you. A stair that lands a half-beat later than you expect, so that your body must listen.",
-      "The masons who laid these stones left no signature. Their argument was structural: that a room, honestly proportioned, will outlast every theory written inside it. I have come to believe them."
-    ],
-    marginalia: [
-      { page: 12, note: "Read alongside Tanizaki on shadow. Same insistence that dimness is a material.", author: "J. Okafor, staff" },
-      { page: 87, note: "The stair passage — marginal sketch of the Laurentian Library. Compare riser heights.", author: "M. Lindqvist, staff" },
-      { page: 201, note: "Underlined in three reader copies this month. Our most annotated chapter.", author: "Marginalia desk" }
-    ],
-    featured: true
-  },
-  {
-    id: "dialectics-of-dust",
-    slug: "dialectics-of-dust",
-    title: "Dialectics of Dust: Selected Prose",
-    author: "Theodor Vane",
-    year: 2021,
-    price: 22,
-    coverUrl: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&q=80&auto=format&fit=crop",
-    category: "Philosophy",
-    isbn: "978-0-24139-882-1",
-    pages: 284,
-    format: "Paperback",
-    publisher: "Vane Estate / Marginalia",
-    synopsis: "Volume IV of the essential prose: twelve essays on attention, ruin, and repair. Vane writes with a bricklayer's patience and a poet's refusal to hurry.",
-    excerpt: [
-      "To attend to a thing is to let it interrupt you. Most of what we call thinking is merely rehearsal. Attention begins where rehearsal fails.",
-      "The ruin is not the opposite of the building. It is the building, finally telling the truth about time. Dust is the archive that no institution thought to keep."
-    ],
-    marginalia: [
-      { page: 44, note: "Pair with Weil on attention. Vane is terser, less consoling.", author: "S. Adeyemi, staff" },
-      { page: 132, note: "Reader margin: 'copied this paragraph into my commonplace book twice.'", author: "Marginalia desk" }
-    ],
-    featured: true
-  },
-  {
-    id: "field-guide-to-leaving",
-    slug: "field-guide-to-leaving",
-    title: "A Field Guide to Leaving",
-    author: "June Park",
-    year: 2024,
     price: 27,
-    coverUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80&auto=format&fit=crop",
+    coverUrl: "https://covers.openlibrary.org/b/id/15175904-L.jpg",
     category: "Fiction",
-    isbn: "978-1-83971-204-3",
-    pages: 336,
+    isbn: "9781529922936",
+    pages: 144,
     format: "Hardcover",
-    publisher: "Marginalia Press",
-    synopsis: "Nine linked stories of departures — night trains, borrowed apartments, last keys. Park's sentences are plain and exact until they quietly break your heart.",
-    excerpt: [
-      "She kept the apartment key for a month after she moved out, turning it over in her coat pocket like a coin. It no longer opened anything. That was precisely why she kept it.",
-      "Every leavetaking, her mother said, should include a meal, a map, and a lie about when you will return. June took the meal. She left the map on the table."
-    ],
+    publisher: "Vintage",
+    synopsis:
+      "Sixteen sunrises in a single day, seen from low orbit. Harvey's Booker-winning novel keeps the earth small and the attention enormous \u2014 a book about looking, written at the scale of a breath.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Harvey makes a formal bet: an entire novel inside one orbit, with almost no plot and no antagonist beyond distance. What replaces plot is attention \u2014 to weather systems, to a bowl of fruit, to the sound a station makes at night. The result reads closer to a long poem than to a novel of ideas.",
+        "It is short, and it is a good antidote to reading quickly. The book asks you to stay in your seat while sixteen sunrises happen overhead, and to notice how many of them you actually saw.",
+      ],
+    },
     marginalia: [
-      { page: 18, note: "First-story rule: teach new readers the collection's rhythm. This one does it.", author: "R. Calloway, staff" },
-      { page: 209, note: "Book-club favorite. Bring tissues and a pencil.", author: "Marginalia desk" }
+      { page: 33, note: "Somebody on staff read this in one sitting and then immediately started it again.", author: "Marginalia desk" },
+      { page: 92, note: "The earth-from-above passages do what the best architecture books do: they re-scale the room you are sitting in.", author: "M. Lindqvist, staff" },
     ],
-    featured: true
+    featured: true,
   },
   {
-    id: "on-typography-and-hunger",
-    slug: "on-typography-and-hunger",
-    title: "On Typography & Hunger",
-    author: "Aldo Serrano",
-    year: 2022,
-    price: 42,
-    coverUrl: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80&auto=format&fit=crop",
-    category: "Design",
-    isbn: "978-3-72120-556-5",
-    pages: 248,
-    format: "Hardcover",
-    publisher: "Studio Serrano",
-    synopsis: "An essay-manual on editorial design: grids that breathe, type that feeds. 180 illustrations, paper samples, and a ruthless chapter on restraint.",
-    excerpt: [
-      "A page, like a table, should offer more than it displays. White space is not emptiness. It is hospitality. The margin says: there is room for you here.",
-      "Set the headline smaller than your courage wants. Then make the text larger than your client expects. Legibility is generosity made measurable."
-    ],
-    marginalia: [
-      { page: 56, note: "The hospitality line is quoted back to us weekly at the counter.", author: "Design desk" },
-      { page: 140, note: "Paper stock note: this edition uses 120gsm Munken. Holds pencil beautifully.", author: "M. Lindqvist, staff" }
-    ]
-  },
-  {
-    id: "winter-herbarium",
-    slug: "winter-herbarium",
-    title: "Winter Herbarium",
-    author: "Ingrid Solberg",
-    year: 2020,
-    price: 19,
-    coverUrl: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&q=80&auto=format&fit=crop",
-    category: "Poetry",
-    isbn: "978-0-52557-113-1",
-    pages: 96,
-    format: "Paperback",
-    publisher: "North Light",
-    synopsis: "Forty-two spare poems pressed like specimens between November and March. Solberg writes winter as a discipline of noticing.",
-    excerpt: [
-      "First frost — / the garden gives back / every stake and string, / keeps only / what can stand / without us.",
-      "I catalogued the cold the way others keep accounts: / debit of light, / credit of stars."
-    ],
-    marginalia: [
-      { page: 22, note: "Read aloud at our December salon. Room went completely still.", author: "Marginalia desk" }
-    ]
-  },
-  {
-    id: "marginal-thinking",
-    slug: "marginal-thinking",
-    title: "Marginal Thinking: Notes Toward an Essayistic Life",
-    author: "Priya Natarajan",
-    year: 2023,
-    price: 24,
-    coverUrl: "https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=600&q=80&auto=format&fit=crop",
-    category: "Essays",
-    isbn: "978-1-40889-301-2",
-    pages: 272,
-    format: "Paperback",
-    publisher: "Marginalia Press",
-    synopsis: "Fourteen essays on annotation, commonplacing, and reading with a pencil. A gentle polemic against frictionless reading.",
-    excerpt: [
-      "The margin is the reader's first draft of courage. To write there is to admit you were present. The book remembers what you were brave enough to answer.",
-      "I do not trust a library without pencil marks. Pristine shelves suggest titles that were shelved, not read."
-    ],
-    marginalia: [
-      { page: 7, note: "Our house philosophy in one paragraph. Staff unanimous.", author: "Marginalia desk" },
-      { page: 118, note: "Commonplace template on p.118 — photocopied most at our shop.", author: "S. Adeyemi, staff" }
-    ]
-  },
-  {
-    id: "concrete-poems",
-    slug: "concrete-poems",
-    title: "Concrete Poems for Soft Cities",
-    author: "Marco Reyes",
-    year: 2019,
+    id: "all-fours",
+    slug: "all-fours",
+    title: "All Fours",
+    author: "Miranda July",
+    year: 2024,
     price: 29,
-    coverUrl: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=600&q=80&auto=format&fit=crop",
-    category: "Architecture",
-    isbn: "978-84-37608-42-6",
-    pages: 208,
-    format: "Paperback",
-    publisher: "Hypostyle",
-    synopsis: "Housing blocks, bus stops, and market halls read as verse. Reyes photographs and annotates the vernacular city with affection and rigor.",
-    excerpt: [
-      "The bus shelter on Calle 8 is not designed, it is decided — a roof, two benches, a timetable bleached to rumor. And yet at 7 a.m. it holds twenty strangers in perfect, unrehearsed order.",
-      "Brutalism was never brutal. Concrete only asks for rain to show its age honestly."
-    ],
+    coverUrl: "https://covers.openlibrary.org/b/id/15204747-L.jpg",
+    category: "Fiction",
+    isbn: "9781838853488",
+    pages: 400,
+    format: "Hardcover",
+    publisher: "Canongate Books",
+    synopsis:
+      "An artist checks into a motel an hour from home and does not reach her destination. July's novel is funny, exact and unembarrassed about desire, marriage and the second half of a life.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "July writes the interior monologue of a woman who has decided to take herself seriously and is appalled by what that produces. The novel is very funny about bodies, money and artistic ambition, and it refuses the tidy version of a midlife reckoning at every turn.",
+        "Structurally it is looser than it looks: the drive, the motel, the room, the return. It is not a cautionary tale and not a manifesto \u2014 it is a report from someone thinking out loud at length, and the length is the point.",
+      ],
+    },
     marginalia: [
-      { page: 63, note: "Pairs beautifully with Architecture of Silence for a city weekend syllabus.", author: "J. Okafor, staff" }
-    ]
+      { page: 58, note: "Our most divided staff read of the year. Three of us loved it; one could not finish it.", author: "Marginalia desk" },
+      { page: 233, note: "The tone swings hard between comedy and dread, sometimes inside one paragraph. Trust it.", author: "S. Ferrante, staff" },
+    ],
+    featured: true,
   },
   {
-    id: "the-passion-according",
-    slug: "the-passion-according",
-    title: "The Passion According to the Archivist",
-    author: "Helena Duarte",
+    id: "the-creative-act",
+    slug: "the-creative-act",
+    title: "The Creative Act",
+    author: "Rick Rubin",
+    year: 2023,
+    price: 32,
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780593653425-L.jpg",
+    category: "Design",
+    isbn: "9780593653425",
+    pages: 432,
+    format: "Hardcover",
+    publisher: "Penguin Press",
+    synopsis:
+      "A working artist's notes on where work actually comes from \u2014 attention, patience, and the discipline of getting out of your own way. Less a method than a weather report for making things.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Rubin's book is a set of short meditations on where work comes from: attention, patience, and the willingness to be a vessel rather than an author. It is deliberately untechnical \u2014 there is no method here, only a way of standing in relation to the work.",
+        "It is built for dipping rather than for reading straight through, and it rewards being kept near whatever you are making. Take what is useful and leave the rest; the book would probably prefer that.",
+      ],
+    },
+    marginalia: [
+      { page: 41, note: "Pairs well with a blank notebook and a closed door.", author: "R. Castellanos, staff" },
+      { page: 168, note: "Skip the chapters that do not apply to you. The book invites exactly that.", author: "Marginalia desk" },
+    ],
+    featured: true,
+  },
+  {
+    id: "the-architecture-of-the-city",
+    slug: "the-architecture-of-the-city",
+    title: "The Architecture of the City",
+    author: "Aldo Rossi",
+    year: 1966,
+    price: 42,
+    coverUrl: "https://covers.openlibrary.org/b/id/10327621-L.jpg",
+    category: "Architecture",
+    isbn: "9780262181013",
+    pages: 205,
+    format: "Paperback",
+    publisher: "The MIT Press",
+    synopsis:
+      "Rossi's argument that the city is something we remember before we plan it \u2014 still the shortest route into thinking about permanence, type, and the parts of a city that refuse to change.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Rossi treats the city as a work of collective memory before he treats it as a problem to be solved. Monuments, districts and dwelling types are not decoration laid on top of a plan; they are the plan's slow accumulation over centuries, and they answer to habits of living rather than to any single designer's intention.",
+        "It is a difficult, rewarding book \u2014 part typology, part autobiography, part long argument with the modern movement. Read it the way Rossi wrote it: slowly, with a pencil, and with a map of a town you actually know open beside you.",
+      ],
+    },
+    marginalia: [
+      { page: 22, note: "Read chapter one with any walk through an old quarter. The \u2018urban artefact\u2019 idea lands outdoors.", author: "M. Lindqvist, staff" },
+      { page: 103, note: "Rossi is not nostalgic for old cities. He is interested in why they hold.", author: "Marginalia desk" },
+    ],
+    featured: true,
+  },
+  {
+    id: "meditations",
+    slug: "meditations",
+    title: "Meditations",
+    author: "Marcus Aurelius",
+    year: 180,
+    price: 18,
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780140449334-L.jpg",
+    category: "Philosophy",
+    isbn: "9780140449334",
+    pages: 254,
+    format: "Paperback",
+    publisher: "Penguin Classics",
+    synopsis:
+      "The private notebook of a Roman emperor, never meant for publication. Marcus Aurelius rehearses the same few disciplines \u2014 attention, mortality, the useful day \u2014 until they wear into habit.",
+    reading: {
+      kind: "excerpt",
+      credit: EXCERPT_CREDITS.MEDITATIONS,
+      paragraphs: MEDITATIONS,
+    },
+    marginalia: [
+      { page: 12, note: "Book One is a list of debts to teachers. Read it as an acknowledgements page for a whole life.", author: "J. Okafor, staff" },
+      { page: 88, note: "He never asks to feel better. He asks to see clearly. That distinction is the entire book.", author: "Marginalia desk" },
+      { page: 214, note: "Our most-annotated volume. Customers keep underlining the same three passages.", author: "R. Castellanos, staff" },
+    ],
+  },
+  {
+    id: "mrs-dalloway",
+    slug: "mrs-dalloway",
+    title: "Mrs Dalloway",
+    author: "Virginia Woolf",
+    year: 1925,
+    price: 19,
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780156628709-L.jpg",
+    category: "Fiction",
+    isbn: "9780156628709",
+    pages: 240,
+    format: "Paperback",
+    publisher: "Harvest",
+    synopsis:
+      "One June day in London, told from inside the heads of everyone who passes through it. Woolf's clock keeps striking while her sentences wander \u2014 the novel that taught a century to write a single day.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Woolf builds the novel out of an ordinary civic day: a florist, a party, a car backfiring in Bond Street. The prose moves by association rather than by event, which is why the book rewards a second reading more than a first \u2014 its structure is legible from the end, not the beginning.",
+        "It is usually shelved as a modernist experiment and undersold as a book about being alive on a Tuesday. Read it for the rhythm first; the argument about time will arrive on its own.",
+      ],
+    },
+    marginalia: [
+      { page: 9, note: "Watch how fast the narrator slides between heads. There is never an announcement.", author: "S. Ferrante, staff" },
+      { page: 145, note: "The clocks recur like a metronome. Read a chapter aloud and try to keep their beat.", author: "T. Whitlock, staff" },
+      { page: 214, note: "Readers tell us they put it down at page thirty and come back a year later. Both are correct.", author: "Marginalia desk" },
+    ],
+  },
+  {
+    id: "martyr",
+    slug: "martyr",
+    title: "Martyr!",
+    author: "Kaveh Akbar",
     year: 2024,
     price: 28,
-    coverUrl: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80&auto=format&fit=crop",
+    coverUrl: "https://covers.openlibrary.org/b/id/14562207-L.jpg",
     category: "Fiction",
-    isbn: "978-0-37428-119-9",
-    pages: 384,
+    isbn: "9780593537619",
+    pages: 352,
     format: "Hardcover",
-    publisher: "Marginalia Press",
-    synopsis: "A Lisbon archivist cataloguing a vanished poet's papers begins forging the missing letters. A novel about custody, forgery, and love of the unfinished.",
-    excerpt: [
-      "The box was labeled EPHEMERA, which in an archive means: we did not know where else to put our tenderness. Ticket stubs, a pressed violet, a grocery list in two hands.",
-      "She told herself she was completing the record. Every archivist knows this is the first lie. The second is that completion is possible."
-    ],
+    publisher: "Knopf",
+    synopsis:
+      "A young poet decides his death ought to mean something and sets out to research the martyrs who came before him. Akbar's debut is funny, tender and unafraid of the largest questions.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Akbar follows a young Iranian-American poet who has decided his own death should mean something, and who researches martyrs the way other people research family trees. The book is funny in a way that keeps catching you off guard, and it takes its grief seriously without ever becoming solemn.",
+        "It is a novel about inheritance, addiction and the uses of art, told with the ear of a poet. Read it for the sentences; stay for the argument about what a life is for.",
+      ],
+    },
     marginalia: [
-      { page: 91, note: "The EPHEMERA line stopped three customers mid-browse this week.", author: "R. Calloway, staff" },
-      { page: 277, note: "No spoilers: the violet returns. That is all we will say.", author: "Marginalia desk" }
-    ]
+      { page: 74, note: "Akbar is a poet first, and you can hear it in the line breaks he refuses to use.", author: "A. Deshmukh, staff" },
+      { page: 301, note: "The ending re-frames the whole book. Do not read the last chapter first, whatever you are told.", author: "Marginalia desk" },
+    ],
   },
   {
-    id: "letters-to-a-young-observer",
-    slug: "letters-to-a-young-observer",
-    title: "Letters to a Young Observer",
-    author: "Simone Hall",
-    year: 2022,
-    price: 21,
-    coverUrl: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=600&q=80&auto=format&fit=crop",
-    category: "Essays",
-    isbn: "978-0-06-293-441-3",
-    pages: 192,
+    id: "in-praise-of-shadows",
+    slug: "in-praise-of-shadows",
+    title: "In Praise of Shadows",
+    author: "Jun'ichir\u014d Tanizaki",
+    year: 1933,
+    price: 17,
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780099283577-L.jpg",
+    category: "Architecture",
+    isbn: "9780099283577",
+    pages: 100,
     format: "Paperback",
-    publisher: "Field Notes",
-    synopsis: "Twenty short letters on looking: museums, streets, notebooks. Hall teaches attention as a portable practice.",
-    excerpt: [
-      "Stand in front of one painting for twenty minutes. You will be bored for seven. Restless for six. Then, if you stay, the painting will begin to look back.",
-      "Carry a small notebook and a large willingness to be wrong about what you saw."
-    ],
+    publisher: "Vintage Classics",
+    synopsis:
+      "A short, sharp essay on Japanese aesthetics \u2014 lacquer, paper, dimness \u2014 written as a lament and read as a manifesto for restraint in the built world.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Tanizaki never argues for beauty in the abstract. He argues from materials \u2014 the way lacquer needs a dim room to become legible, the way a paper screen holds light at its edge, the way a single clear bulb can ruin an entire room. The essay is short enough to finish in an evening and specific enough to keep for years.",
+        "It sits naturally beside any book about proportion. Where an architect measures a wall, Tanizaki measures the inch between the shadow of a shelf and the page beneath it, and finds both worth defending.",
+      ],
+    },
     marginalia: [
-      { page: 33, note: "We run a 20-minute exercise from this chapter in every workshop.", author: "S. Adeyemi, staff" }
-    ]
+      { page: 18, note: "Our most-gifted short book. Nobody has ever bought just one copy.", author: "Marginalia desk" },
+      { page: 46, note: "If you read one passage, read the one about the temple toilet. I am entirely serious.", author: "J. Okafor, staff" },
+    ],
   },
   {
-    id: "stone-and-song",
-    slug: "stone-and-song",
-    title: "Stone and Song",
-    author: "Tomas Berg",
-    year: 2021,
-    price: 18,
-    coverUrl: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=600&q=80&auto=format&fit=crop",
-    category: "Poetry",
-    isbn: "978-1-78269-330-7",
-    pages: 112,
-    format: "Paperback",
-    publisher: "North Light",
-    synopsis: "Quarry poems and hymns. Berg listens for the music inside labor — hammer, choir, tide.",
-    excerpt: [
-      "The quarrymen sang to measure the cut — / one verse per stone, / one silence / for the one that broke wrong.",
-      "Granite remembers the sea / the way we remember childhood: / exactly, and not at all."
-    ],
-    marginalia: [
-      { page: 48, note: "Translation note: Swedish originals face the English. Both sing.", author: "M. Lindqvist, staff" }
-    ]
-  },
-  {
-    id: "the-grid-and-the-garden",
-    slug: "the-grid-and-the-garden",
-    title: "The Grid and the Garden",
-    author: "Yuki Tanaka",
-    year: 2023,
-    price: 38,
-    coverUrl: "https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=600&q=80&auto=format&fit=crop",
-    category: "Design",
-    isbn: "978-4-87311-902-1",
-    pages: 296,
-    format: "Hardcover",
-    publisher: "Studio Serrano",
-    synopsis: "Kyoto gardens through a designer's eye: constraint as generosity. Includes fold-out plans and seasonal maintenance diaries.",
-    excerpt: [
-      "The garden does not hide the grid. It teaches the grid manners. Stones are placed where the eye would otherwise hurry.",
-      "Maintenance is authorship continued by other hands. To rake gravel is to reprint the page each morning."
-    ],
-    marginalia: [
-      { page: 102, note: "Fold-out plan of Ryoan-ji rewards slow unfolding. Do not rush it.", author: "Design desk" }
-    ]
-  },
-  {
-    id: "on-walking-and-knowing",
-    slug: "on-walking-and-knowing",
-    title: "On Walking and Knowing",
-    author: "Robert Illich",
-    year: 2020,
-    price: 23,
-    coverUrl: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=600&q=80&auto=format&fit=crop",
-    category: "Philosophy",
-    isbn: "978-0-24140-112-5",
-    pages: 256,
-    format: "Paperback",
-    publisher: "Vane Estate / Marginalia",
-    synopsis: "A philosophy of the footpath: pace, digression, and arrival. Illich walks six historic routes and thinks at three miles per hour.",
-    excerpt: [
-      "Thought walks at the speed of the body. Faster, and it becomes logistics. Slower, and it becomes sleep. Three miles per hour is the mind's native gait.",
-      "A digression is not a departure from the path. Properly understood, the path is what digressions have in common."
-    ],
-    marginalia: [
-      { page: 77, note: "Margin sketch: pace diagram. Staff walk favorite.", author: "J. Okafor, staff" }
-    ]
-  },
-  {
-    id: "small-hours",
-    slug: "small-hours",
-    title: "Small Hours",
-    author: "Ada Osei",
+    id: "the-serviceberry",
+    slug: "the-serviceberry",
+    title: "The Serviceberry",
+    author: "Robin Wall Kimmerer",
     year: 2024,
-    price: 26,
-    coverUrl: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=600&q=80&auto=format&fit=crop",
-    category: "Fiction",
-    isbn: "978-0-52555-987-0",
-    pages: 304,
+    price: 24,
+    coverUrl: "https://covers.openlibrary.org/b/id/14827078-L.jpg",
+    category: "Essays",
+    isbn: "9781668072257",
+    pages: 128,
     format: "Hardcover",
-    publisher: "Marginalia Press",
-    synopsis: "A night-shift nurse, a lighthouse keeper, and a baker trade the same city after dark. Osei's interwoven novellas glow quietly.",
-    excerpt: [
-      "At 3 a.m. the hospital corridor is a long held breath. Ada moved through it the way you move through a library — as if noise were a form of rudeness.",
-      "The lighthouse log for October 14 reads, in full: 'Fog. Fog. Bread from town. Fog lifted long enough to miss it.'"
-    ],
+    publisher: "Scribner",
+    synopsis:
+      "Kimmerer takes one autumn berry and uses it to think about reciprocity: what it would mean to treat a harvest as a gift rather than a transaction.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Kimmerer takes a single autumn berry and uses it to think about reciprocity \u2014 what it would mean to treat a harvest as a gift rather than a transaction. The book is short, plain and quietly radical about the economy it describes.",
+        "It reads best in one sitting, outdoors if possible. Bring it to any argument about land, gifts or gratitude and it will hold its ground.",
+      ],
+    },
     marginalia: [
-      { page: 141, note: "The lighthouse log — two sentences, perfect story. Workshop prompt gold.", author: "R. Calloway, staff" }
-    ]
+      { page: 27, note: "Read the reciprocity chapter, then go outside. The order matters.", author: "T. Whitlock, staff" },
+      { page: 88, note: "A gift economy explained without a single slogan. Rare.", author: "Marginalia desk" },
+    ],
   },
   {
-    id: "essays-against-haste",
-    slug: "essays-against-haste",
-    title: "Essays Against Haste",
-    author: "Leonard Moss",
-    year: 2018,
+    id: "leaves-of-grass",
+    slug: "leaves-of-grass",
+    title: "Leaves of Grass",
+    author: "Walt Whitman",
+    year: 1855,
+    price: 15,
+    coverUrl: "https://covers.openlibrary.org/b/id/9000447-L.jpg",
+    category: "Poetry",
+    isbn: "9780451524850",
+    pages: 384,
+    format: "Paperback",
+    publisher: "Signet Classics",
+    synopsis:
+      "Whitman's self-published first edition, the book he rewrote for the rest of his life. Its catalogues, its body and its democratic sprawl gave American poetry a new register.",
+    reading: {
+      kind: "excerpt",
+      credit: EXCERPT_CREDITS.LEAVES_OF_GRASS,
+      paragraphs: LEAVES_OF_GRASS,
+    },
+    marginalia: [
+      { page: 29, note: "Read the long lines aloud and the line breaks suddenly make sense. Silently, they flatten.", author: "T. Whitlock, staff" },
+      { page: 62, note: "The catalogues exhaust some readers and convert others. There is no third response.", author: "Marginalia desk" },
+    ],
+  },
+  {
+    id: "a-swim-in-a-pond-in-the-rain",
+    slug: "a-swim-in-a-pond-in-the-rain",
+    title: "A Swim in a Pond in the Rain",
+    author: "George Saunders",
+    year: 2021,
     price: 20,
-    coverUrl: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=600&q=80&auto=format&fit=crop",
+    coverUrl: "https://covers.openlibrary.org/b/id/12451689-L.jpg",
     category: "Essays",
-    isbn: "978-1-91039-552-3",
+    isbn: "9781984856029",
+    pages: 417,
+    format: "Hardcover",
+    publisher: "Random House",
+    synopsis:
+      "Seven Russian short stories, taken apart and put back together by a master teacher. A craft book that never feels like one, because the teaching happens inside the reading.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Saunders takes seven Russian short stories and walks through them the way a mechanic walks through an engine, showing you where each one gets its power. It is a writing manual that never feels like one, because the teaching happens inside the reading.",
+        "You can read it as a craft book or simply as an anthology with a very good host. Either way the effect is the same: the stories you thought you knew get longer, stranger and better.",
+      ],
+    },
+    marginalia: [
+      { page: 15, note: "Saunders teaches by showing you where his own attention snags. It is a generous method.", author: "S. Ferrante, staff" },
+      { page: 204, note: "Keep a pencil out. You will want to mark the paragraphs about escalation.", author: "Marginalia desk" },
+    ],
+  },
+  {
+    id: "the-souls-of-black-folk",
+    slug: "the-souls-of-black-folk",
+    title: "The Souls of Black Folk",
+    author: "W. E. B. Du Bois",
+    year: 1903,
+    price: 14,
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780140189988-L.jpg",
+    category: "Essays",
+    isbn: "9780140189988",
+    pages: 206,
+    format: "Paperback",
+    publisher: "Penguin Classics",
+    synopsis:
+      "Du Bois's landmark study of Black life in America after Emancipation \u2014 history, memoir, music and sociology braided into a single argument about the colour line.",
+    reading: {
+      kind: "excerpt",
+      credit: EXCERPT_CREDITS.SOULS_OF_BLACK_FOLK,
+      paragraphs: SOULS_OF_BLACK_FOLK,
+    },
+    marginalia: [
+      { page: 7, note: "Read the forethought twice. It states the whole argument in two pages.", author: "J. Okafor, staff" },
+      { page: 151, note: "The chapter on the sorrow songs is the one people quote from memory.", author: "Marginalia desk" },
+    ],
+  },
+  {
+    id: "the-elements-of-typographic-style",
+    slug: "the-elements-of-typographic-style",
+    title: "The Elements of Typographic Style",
+    author: "Robert Bringhurst",
+    year: 1992,
+    price: 38,
+    coverUrl: "https://covers.openlibrary.org/b/id/13236790-L.jpg",
+    category: "Design",
+    isbn: "9780881792126",
+    pages: 398,
+    format: "Hardcover",
+    publisher: "Hartley & Marks",
+    synopsis:
+      "Bringhurst's manual on type: opinions, measurements and a long memory for precedent. Still the book to hand a designer on their first day.",
+    reading: {
+      kind: "notes",
+      paragraphs: [
+        "Bringhurst writes about type the way a good architect writes about rooms: with opinions, measurements and a long memory for precedent. This is a manual, a history and an argument at once, and it is still the book to hand a designer on their first day.",
+        "The later editions expand the inventory of typefaces and the sections on rhythm and proportion. Keep it within reach rather than on a shelf \u2014 it is a reference you will actually open.",
+      ],
+    },
+    marginalia: [
+      { page: 22, note: "Own a copy you are willing to write in. The margins are the point.", author: "R. Castellanos, staff" },
+      { page: 187, note: "The chapter on rhythm is worth the price of the book on its own.", author: "M. Lindqvist, staff" },
+    ],
+  },
+  {
+    id: "walden",
+    slug: "walden",
+    title: "Walden",
+    author: "Henry David Thoreau",
+    year: 1854,
+    price: 16,
+    coverUrl: "https://covers.openlibrary.org/b/isbn/9780486284958-L.jpg",
+    category: "Philosophy",
+    isbn: "9780486284958",
     pages: 224,
     format: "Paperback",
-    publisher: "Field Notes",
-    synopsis: "In praise of slow reading, long letters, and second drafts. Moss is wry, humane, and quietly radical about time.",
-    excerpt: [
-      "Haste is not speed. Speed can be beautiful — the sprinter, the swallow. Haste is speed without destination, a hurry that has forgotten what it hurries toward.",
-      "Write the letter by hand. You will say less, and mean more. The postage is the price of having meant it."
-    ],
+    publisher: "Dover Publications",
+    synopsis:
+      "Two years, two months and two days in a cabin by a pond, and the ledger of attention that came out of it. Less an escape from society than an accounting of what a life costs.",
+    reading: {
+      kind: "excerpt",
+      credit: EXCERPT_CREDITS.WALDEN,
+      paragraphs: WALDEN,
+    },
     marginalia: [
-      { page: 15, note: "Pairs with Marginal Thinking for a slow-reading starter shelf.", author: "Marginalia desk" }
-    ]
-  }
+      { page: 4, note: "Notice that he starts by answering his neighbours' questions. The book is a reply, not a sermon.", author: "T. Whitlock, staff" },
+      { page: 178, note: "By the pond chapters the prose goes quiet and observational. This is where readers slow down.", author: "A. Deshmukh, staff" },
+    ],
+  },
+  {
+    id: "the-prophet",
+    slug: "the-prophet",
+    title: "The Prophet",
+    author: "Kahlil Gibran",
+    year: 1923,
+    price: 13,
+    coverUrl: "https://covers.openlibrary.org/b/id/14039410-L.jpg",
+    category: "Poetry",
+    isbn: "9798432076724",
+    pages: 112,
+    format: "Paperback",
+    publisher: "Knopf",
+    synopsis:
+      "Gibran's sequence of poetic sermons on love, work, freedom and death, spoken by a departing sage. A small book that has been read at weddings and funerals for a century.",
+    reading: {
+      kind: "excerpt",
+      credit: EXCERPT_CREDITS.THE_PROPHET,
+      paragraphs: THE_PROPHET,
+    },
+    marginalia: [
+      { page: 11, note: "Read \u2018On Work\u2019 at the start of a Monday. It has ruined several of ours.", author: "Marginalia desk" },
+      { page: 89, note: "A book people give away and then buy again. We restock it every month.", author: "J. Okafor, staff" },
+    ],
+  },
 ];
 
-export const CATEGORIES = ["All", "Philosophy", "Architecture", "Fiction", "Poetry", "Essays", "Design"] as const;
+export const CATEGORIES: string[] = [
+  "All",
+  "Philosophy",
+  "Architecture",
+  "Fiction",
+  "Poetry",
+  "Essays",
+  "Design",
+];
 
-export function getBook(id: string): Book | undefined {
-  return BOOKS.find((b) => b.id === id || b.slug === id);
+const BY_ID = new Map(BOOKS.map((b) => [b.id, b]));
+const BY_SLUG = new Map(BOOKS.map((b) => [b.slug, b]));
+
+/** Resolve by id or slug — the API accepts either. */
+export function getBook(idOrSlug?: string | null): Book | undefined {
+  if (!idOrSlug) return undefined;
+  return BY_ID.get(idOrSlug) ?? BY_SLUG.get(idOrSlug);
 }

@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { X, ShoppingBag, Quote } from "lucide-react";
 import { getBook } from "@/lib/books-data";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, formatYear } from "@/lib/utils";
 import { useCart } from "@/lib/cart-store";
 import { useBodyScrollLock, useEscapeToClose } from "@/lib/hooks";
 import { Button } from "@/components/ui/controls";
 
 export default function ReaderModal() {
   const { readerId, setReaderId, add, setBagOpen } = useCart();
-  const [tab, setTab] = useState<"excerpt" | "notes">("excerpt");
+  const [tab, setTab] = useState<"reading" | "notes">("reading");
   const book = readerId ? getBook(readerId) : undefined;
   const open = Boolean(book);
 
@@ -19,10 +19,14 @@ export default function ReaderModal() {
   useEscapeToClose(open, () => setReaderId(null));
 
   useEffect(() => {
-    setTab("excerpt");
+    setTab("reading");
   }, [readerId]);
 
   if (!book) return null;
+
+  const { reading } = book;
+  const isExcerpt = reading.kind === "excerpt";
+  const textLabel = isExcerpt ? "Excerpt" : "Editor\u2019s Note";
 
   return (
     <div
@@ -32,13 +36,13 @@ export default function ReaderModal() {
       <div
         role="dialog"
         aria-modal="true"
-        aria-label={`Excerpt and marginalia for ${book.title}`}
+        aria-label={`${isExcerpt ? "Excerpt" : "Editor's note"} and marginalia for ${book.title}`}
         className="max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-t-lg bg-paper shadow-2xl sm:rounded-md"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-3">
           <div className="font-mono text-[12px] uppercase tracking-wide text-muted">
-            Excerpt &amp; Marginalia &mdash; {book.isbn}
+            {isExcerpt ? "Excerpt" : "Reader\u2019s Note"} &amp; Marginalia &mdash; ISBN {book.isbn}
           </div>
           <button
             type="button"
@@ -58,7 +62,7 @@ export default function ReaderModal() {
               </div>
               <div>
                 <div className="font-mono text-[11px] uppercase tracking-wide text-terracotta">
-                  {book.category} &middot; {book.year}
+                  {book.category} &middot; {formatYear(book.year)}
                 </div>
                 <h2 className="font-serif text-2xl font-semibold leading-tight">{book.title}</h2>
                 <p className="text-sm text-graphite">
@@ -72,13 +76,13 @@ export default function ReaderModal() {
 
             <div className="mb-4 flex gap-2 md:hidden">
               <Button
-                variant={tab === "excerpt" ? "accent" : "outline"}
+                variant={tab === "reading" ? "accent" : "outline"}
                 size="sm"
                 className="flex-1"
-                onClick={() => setTab("excerpt")}
-                aria-pressed={tab === "excerpt"}
+                onClick={() => setTab("reading")}
+                aria-pressed={tab === "reading"}
               >
-                Excerpt
+                {isExcerpt ? "Excerpt" : "Note"}
               </Button>
               <Button
                 variant={tab === "notes" ? "accent" : "outline"}
@@ -91,10 +95,13 @@ export default function ReaderModal() {
               </Button>
             </div>
 
-            <div className={`${tab === "excerpt" ? "block" : "hidden"} md:block`}>
+            <div className={`${tab === "reading" ? "block" : "hidden"} md:block`}>
+              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+                {isExcerpt ? "\u2014 From the text" : "\u2014 Written by the shop"}
+              </p>
               <div className="prose-book font-reading text-[16.5px] text-ink">
-                {book.excerpt.map((p, i) => (
-                  <p key={i}>
+                {reading.paragraphs.map((p, i) => (
+                  <p key={i} className="whitespace-pre-line">
                     {i === 0 ? (
                       <>
                         <span aria-hidden className="float-left mr-2 font-serif text-5xl leading-[0.9] text-terracotta">
@@ -108,6 +115,11 @@ export default function ReaderModal() {
                   </p>
                 ))}
               </div>
+              {reading.credit && (
+                <p className="mt-3 font-mono text-[11px] uppercase tracking-wide text-muted">
+                  Source: {reading.credit}
+                </p>
+              )}
               <p className="mt-4 border-t border-line pt-3 font-serif text-[15px] italic text-graphite">
                 {book.synopsis}
               </p>

@@ -1,18 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { BookOpen, Plus } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import type { Book } from "@/lib/types";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, formatYear } from "@/lib/utils";
 import { useCart } from "@/lib/cart-store";
-import { Badge, Button } from "@/components/ui/controls";
 
 export default function BookCard({ book }: { book: Book }) {
   const { add, setReaderId } = useCart();
+  const hasExcerpt = book.reading.kind === "excerpt";
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-md border border-line bg-white shadow-book transition-shadow hover:shadow-lg">
-      <div className="relative aspect-[3/4] overflow-hidden bg-wash">
+      <div className={`h-1.5 w-full ${book.featured ? "bg-terracotta" : "bg-plum/25"}`} aria-hidden />
+
+      <button
+        type="button"
+        onClick={() => setReaderId(book.id)}
+        aria-label={`${hasExcerpt ? "Read the extract from" : "Read the shop\u2019s note on"} ${book.title}`}
+        className="relative block aspect-[3/4] w-full overflow-hidden bg-wash"
+      >
         <Image
           src={book.coverUrl}
           alt={`Cover of ${book.title} by ${book.author}`}
@@ -20,39 +27,36 @@ export default function BookCard({ book }: { book: Book }) {
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
         />
-        <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
-          <Badge className="border-line/80 bg-paper/95">{book.category}</Badge>
-          {book.featured && <Badge className="border-terracotta/40 bg-terracotta/10 text-terracotta-deep">Featured</Badge>}
-        </div>
+      </button>
 
-        <div className="absolute inset-x-0 bottom-0 hidden translate-y-2 gap-2 bg-gradient-to-t from-black/55 to-transparent p-3 opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100 sm:flex">
-          <Button variant="outline" size="sm" className="flex-1" onClick={() => setReaderId(book.id)}>
-            <BookOpen size={14} aria-hidden /> Sample Excerpt
-          </Button>
-          <Button variant="accent" size="sm" className="flex-1" onClick={() => add(book.id)}>
-            <Plus size={14} aria-hidden /> Quick Add
-          </Button>
-        </div>
-      </div>
+      <div className="flex flex-1 flex-col p-4">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-terracotta">{book.category}</p>
+        <h3 className="mt-1 font-serif text-[16px] font-medium leading-snug">{book.title}</h3>
+        <p className="mt-0.5 text-[13px] text-graphite">{book.author}</p>
+        <p className="mt-1 font-mono text-[11px] text-muted">
+          {book.format} &middot; {formatYear(book.year)} &middot; {book.pages}p
+        </p>
 
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        <div className="font-mono text-[11px] uppercase tracking-wide text-muted">
-          {book.format} &middot; {book.year}
-        </div>
-        <h3 className="font-serif text-[17px] font-medium leading-snug">{book.title}</h3>
-        <p className="text-[13px] text-graphite">{book.author}</p>
-        <div className="mt-auto flex items-center justify-between pt-2">
-          <span className="font-mono text-[12px] text-graphite">{book.pages}p</span>
-          <span className="font-mono text-[14px] font-semibold">{formatPrice(book.price)}</span>
-        </div>
-
-        <div className="mt-2 flex gap-2 sm:hidden">
-          <Button variant="outline" size="sm" className="flex-1" onClick={() => setReaderId(book.id)}>
-            Excerpt
-          </Button>
-          <Button variant="primary" size="sm" className="flex-1" onClick={() => add(book.id)}>
-            Add
-          </Button>
+        <div className="mt-3 flex items-center justify-between gap-2 border-t border-line pt-3">
+          <span className="font-mono text-[15px] font-semibold text-terracotta">{formatPrice(book.price)}</span>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setReaderId(book.id)}
+              className="inline-flex items-center gap-1 rounded-md border border-line px-2 py-1.5 text-[11px] font-medium text-graphite transition-colors hover:border-ink hover:text-ink"
+            >
+              <BookOpen size={13} aria-hidden />
+              {hasExcerpt ? "Extract" : "Notes"}
+            </button>
+            <button
+              type="button"
+              onClick={() => add(book.id)}
+              className="inline-flex items-center gap-1 rounded-md border border-ink bg-ink px-2.5 py-1.5 text-[11px] font-medium text-paper transition-colors hover:border-terracotta hover:bg-terracotta"
+            >
+              Buy now
+              <ArrowRight size={13} aria-hidden />
+            </button>
+          </div>
         </div>
       </div>
     </article>

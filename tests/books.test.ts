@@ -64,23 +64,27 @@ describe("catalog data integrity", () => {
       assert.ok(b.title.trim().length > 3, `${at} title too short`);
       assert.ok(b.author.trim().length > 2, `${at} author missing`);
       assert.ok(b.publisher.trim().length > 2, `${at} publisher missing`);
-      assert.ok(b.year >= 1900 && b.year <= 2100, `${at} implausible year ${b.year}`);
+      assert.ok(Number.isInteger(b.year) && b.year > 0 && b.year <= 2100, `${at} implausible year ${b.year}`);
       assert.ok(b.price > 0 && b.price < 1000, `${at} implausible price ${b.price}`);
       assert.ok(Number.isInteger(b.pages) && b.pages > 0, `${at} bad page count`);
-      assert.match(b.isbn, /^\d{3}(-\d{1,5}){2,4}-\d$/, `${at} malformed ISBN hyphenation ${b.isbn}`);
+      assert.match(b.isbn, /^\d{13}$/, `${at} ISBN must be 13 digits: ${b.isbn}`);
       assert.ok(isValidIsbn13(b.isbn), `${at} ISBN-13 check digit is invalid: ${b.isbn}`);
-      assert.match(b.coverUrl, /^https:\/\/images\.unsplash\.com\//, `${at} cover must be an Unsplash https URL`);
+      assert.match(
+        b.coverUrl,
+        /^https:\/\/(covers\.openlibrary\.org|images\.unsplash\.com)\//,
+        `${at} cover must be served over https from the Open Library or Unsplash CDN`
+      );
       assert.ok(["Hardcover", "Paperback"].includes(b.format), `${at} bad format`);
       assert.ok(b.synopsis.trim().length > 40, `${at} synopsis too short`);
     }
   });
 
-  it("gives every volume a readable excerpt and staff marginalia", () => {
+  it("gives every volume readable text and staff marginalia", () => {
     for (const b of BOOKS) {
       const at = `[${b.id}]`;
-      assert.ok(b.excerpt.length >= 2, `${at} needs >= 2 excerpt paragraphs`);
-      for (const p of b.excerpt) {
-        assert.ok(p.trim().length > 40, `${at} excerpt paragraph too short`);
+      assert.ok(b.reading.paragraphs.length >= 2, `${at} needs >= 2 paragraphs`);
+      for (const p of b.reading.paragraphs) {
+        assert.ok(p.trim().length > 40, `${at} reading paragraph too short`);
       }
       assert.ok(b.marginalia.length >= 1, `${at} needs >= 1 marginalia note`);
       for (const m of b.marginalia) {
@@ -89,6 +93,22 @@ describe("catalog data integrity", () => {
         assert.ok(m.author.trim().length > 2, `${at} marginalia author missing`);
       }
     }
+  });
+
+  it("only claims an extract where it can credit a real source", () => {
+    const kinds = new Set<string>();
+    for (const b of BOOKS) {
+      const at = `[${b.id}]`;
+      assert.ok(["excerpt", "notes"].includes(b.reading.kind), `${at} bad reading kind`);
+      kinds.add(b.reading.kind);
+      if (b.reading.kind === "excerpt") {
+        assert.ok(b.reading.credit, `${at} an extract must be credited`);
+        assert.match(b.reading.credit as string, /gutenberg/i, `${at} extract credit must name its source`);
+      } else {
+        assert.equal(b.reading.credit, undefined, `${at} a shop note must not claim a source`);
+      }
+    }
+    assert.deepEqual([...kinds].sort(), ["excerpt", "notes"], "both reading kinds should be represented");
   });
 
   it("returns undefined for unknown volumes instead of throwing", () => {
@@ -118,8 +138,8 @@ describe("filterBooks", () => {
   });
 
   it("searches title, author, synopsis, publisher and category, case- and space-insensitively", () => {
-    const byAuthor = filterBooks(BOOKS, { search: "  mArChEtTi  " });
-    assert.deepEqual(byAuthor.map((b) => b.id), ["architecture-of-silence"]);
+    const byAuthor = filterBooks(BOOKS, { search: "  wOoLf  " });
+    assert.deepEqual(byAuthor.map((b) => b.id), ["mrs-dalloway"]);
 
     const byCategory = filterBooks(BOOKS, { search: "design" });
     assert.ok(byCategory.length >= 2);
@@ -154,8 +174,8 @@ describe("filterBooks", () => {
   });
 
   it("combines category, format and search", () => {
-    const result = filterBooks(BOOKS, { category: "Fiction", format: "Hardcover", search: "park" });
-    assert.deepEqual(result.map((b) => b.id), ["field-guide-to-leaving"]);
+    const result = filterBooks(BOOKS, { category: "Fiction", format: "Hardcover", search: "harvey" });
+    assert.deepEqual(result.map((b) => b.id), ["orbital"]);
   });
 });
 

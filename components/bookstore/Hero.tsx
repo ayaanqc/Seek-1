@@ -1,0 +1,158 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import type { Book } from "@/lib/types";
+import { CATEGORIES } from "@/lib/books-data";
+import { formatPrice } from "@/lib/utils";
+
+// Offsets around the active cover: two to the left, two to the right.
+const OFFSETS = [-2, -1, 0, 1, 2];
+
+// Indexed by distance from the active cover: 0 = the big centre book, 2 = the far edges.
+const SIZES = [
+  "h-[280px] w-[197px] sm:h-[330px] sm:w-[232px]",
+  "h-[206px] w-[145px] sm:h-[244px] sm:w-[171px]",
+  "h-[168px] w-[118px]",
+];
+
+export default function Hero({
+  books,
+  query,
+  setQuery,
+  category,
+  setCategory,
+  onSearch,
+  onOpen,
+}: {
+  books: Book[];
+  query: string;
+  setQuery: (v: string) => void;
+  category: string;
+  setCategory: (v: string) => void;
+  onSearch: () => void;
+  onOpen: (id: string) => void;
+}) {
+  const [index, setIndex] = useState(0);
+  const total = books.length;
+  const active = books[index];
+  const step = (delta: number) => setIndex((i) => (i + delta + total) % total);
+
+  return (
+    <section className="border-b border-line bg-cream">
+      <div className="mx-auto max-w-6xl px-4 pb-12 pt-12 sm:pt-16">
+        <p className="text-center font-mono text-[11px] uppercase tracking-[0.24em] text-terracotta">
+          A curated bookstore &amp; reading salon
+        </p>
+        <h2 className="mx-auto mt-3 max-w-3xl text-center font-serif text-[33px] font-semibold leading-[1.08] tracking-tight sm:text-[46px]">
+          Discover &amp; read <span className="text-terracotta">{total}</span> kept volumes
+        </h2>
+
+        <form
+          className="mx-auto mt-7 flex max-w-2xl items-stretch overflow-hidden rounded-md border border-line bg-white shadow-book focus-within:border-terracotta"
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSearch();
+          }}
+        >
+          <label className="sr-only" htmlFor="hero-category">
+            Category
+          </label>
+          <select
+            id="hero-category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="max-w-[45%] border-r border-line bg-transparent px-3 py-3 text-[13px] text-graphite focus:outline-none"
+          >
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c === "All" ? "All categories" : c}
+              </option>
+            ))}
+          </select>
+
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={"Search title, author or theme\u2026"}
+            aria-label="Search the catalog"
+            className="min-w-0 flex-1 px-3 py-3 text-sm focus:outline-none"
+          />
+
+          <button
+            type="submit"
+            aria-label="Show matching volumes"
+            className="inline-flex items-center gap-2 bg-ink px-4 text-sm font-medium text-paper transition-colors hover:bg-terracotta"
+          >
+            <Search size={16} aria-hidden />
+            <span className="hidden sm:inline">Search</span>
+          </button>
+        </form>
+
+        <div className="relative mt-10">
+          <div className="flex items-center justify-center gap-2 overflow-hidden py-8 sm:gap-5">
+            {OFFSETS.map((off) => {
+              const abs = Math.abs(off);
+              const book = books[(index + off + total) % total];
+              const isActive = abs === 0;
+              return (
+                <button
+                  key={`${book.id}-${off}`}
+                  type="button"
+                  onClick={() => (isActive ? onOpen(book.id) : setIndex((index + off + total) % total))}
+                  aria-label={isActive ? `Open ${book.title}` : `Bring ${book.title} to the front`}
+                  className={`relative shrink-0 overflow-hidden rounded-sm ring-1 ring-black/10 transition-all duration-300 ${SIZES[abs]} ${
+                    abs === 2 ? "hidden opacity-50 sm:block" : ""
+                  } ${abs === 1 ? "opacity-80" : ""} ${isActive ? "shadow-cover" : "shadow-book"}`}
+                >
+                  <Image
+                    src={book.coverUrl}
+                    alt={`Cover of ${book.title} by ${book.author}`}
+                    fill
+                    sizes="240px"
+                    priority={isActive}
+                    className="object-cover"
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => step(-1)}
+            aria-label="Previous volume"
+            className="absolute left-0 top-1/2 -translate-y-1/2 rounded-md border border-line bg-white p-2 text-ink shadow-book transition-colors hover:border-terracotta hover:text-terracotta"
+          >
+            <ChevronLeft size={18} aria-hidden />
+          </button>
+          <button
+            type="button"
+            onClick={() => step(1)}
+            aria-label="Next volume"
+            className="absolute right-0 top-1/2 -translate-y-1/2 rounded-md border border-line bg-white p-2 text-ink shadow-book transition-colors hover:border-terracotta hover:text-terracotta"
+          >
+            <ChevronRight size={18} aria-hidden />
+          </button>
+        </div>
+
+        <div className="mt-6 text-center">
+          <p className="font-serif text-[19px] font-medium">{active.title}</p>
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-wide text-muted">
+            {active.author} &middot; {active.category} &middot; {formatPrice(active.price)}
+          </p>
+          <button
+            type="button"
+            onClick={() => onOpen(active.id)}
+            className="mt-4 inline-flex items-center gap-2 rounded-md border border-ink bg-ink px-4 py-2 text-sm font-medium text-paper transition-colors hover:border-terracotta hover:bg-terracotta"
+          >
+            {active.reading.kind === "excerpt" ? "Read the extract" : "Read the shop\u2019s note"}
+            <ChevronRight size={15} aria-hidden />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}

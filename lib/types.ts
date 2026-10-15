@@ -14,6 +14,22 @@ export interface MarginaliaNote {
   author: string;
 }
 
+/**
+ * What the reader panel shows.
+ *
+ * - "excerpt" — a verbatim passage from a public-domain text, always credited.
+ * - "notes"   — original copy written by the shop, used for in-copyright titles
+ *               where quoting the text would not be appropriate.
+ *
+ * Every book has one or the other, and the UI labels them honestly rather than
+ * pretending an editor's note is the author's prose.
+ */
+export interface Reading {
+  kind: "excerpt" | "notes";
+  credit?: string;
+  paragraphs: string[];
+}
+
 export interface Book {
   id: string;
   slug: string;
@@ -28,7 +44,7 @@ export interface Book {
   format: BookFormat;
   publisher: string;
   synopsis: string;
-  excerpt: string[];
+  reading: Reading;
   marginalia: MarginaliaNote[];
   featured?: boolean;
 }
