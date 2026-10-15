@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #FBFBF9;
+  --ink: #1F1E1D;
+}
+
+html, body {
+  background: #FBFBF9;
+  color: #1F1E1D;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", Manrope, Inter, system-ui, sans-serif;
+}
+
+.font-serif {
+  font-family: Georgia, "Cormorant Garamond", "Playfair Display", "Times New Roman", serif;
+}
+
+::selection {
+  background: #C96442;
+  color: #fff;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.prose-book p {
+  margin-bottom: 1.1em;
+  line-height: 1.85;
+}
