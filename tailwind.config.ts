@@ -23,9 +23,12 @@ const config: Config = {
         line: "#E5E5DE",
       },
       fontFamily: {
-        serif: ["Georgia", '"Cormorant Garamond"', '"Playfair Display"', '"Times New Roman"', "serif"],
-        sans: ['"Plus Jakarta Sans"', "Manrope", "Inter", "system-ui", "sans-serif"],
-        mono: ['"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
+        // Display / titles / quotes — self-hosted via next/font, Georgia fallback.
+        serif: ['"var(--font-display)"', "Georgia", '"Playfair Display"', '"Times New Roman"', "serif"],
+        // Long-form reading — Georgia is the most legible widely-available serif.
+        reading: ["Georgia", '"Source Serif 4"', '"Iowan Old Style"', "serif"],
+        sans: ['"var(--font-sans)"', '"Plus Jakarta Sans"', "Manrope", "Inter", "system-ui", "sans-serif"],
+        mono: ['"var(--font-mono)"', '"JetBrains Mono"', "ui-monospace", "SFMono-Regular", "monospace"],
       },
       boxShadow: {
         book: "0 1px 2px rgba(31,30,29,0.06), 0 8px 24px -12px rgba(31,30,29,0.18)",

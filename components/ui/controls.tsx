@@ -1,26 +1,40 @@
-import { cn } from "@/lib/utils";
-import React from "react";
+"use client";
 
-export function Button({
-  className,
-  variant = "primary",
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "outline" | "ghost" }) {
+import React from "react";
+import { cn } from "@/lib/utils";
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: "primary" | "outline" | "ghost" | "accent";
+  size?: "sm" | "md";
+};
+
+export function Button({ className, variant = "primary", size = "md", type = "button", ...props }: ButtonProps) {
   return (
     <button
+      type={type}
       {...props}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50",
-        variant === "primary" && "border-ink bg-ink text-paper hover:bg-terracotta hover:border-terracotta",
+        "inline-flex items-center justify-center gap-2 rounded-md border font-medium transition-colors",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        size === "sm" ? "px-2.5 py-1.5 text-[12px]" : "px-4 py-2 text-sm",
+        variant === "primary" && "border-ink bg-ink text-paper hover:border-terracotta hover:bg-terracotta",
+        variant === "accent" &&
+          "border-terracotta bg-terracotta text-white hover:border-terracotta-deep hover:bg-terracotta-deep",
         variant === "outline" && "border-line bg-white text-ink hover:border-ink",
-        variant === "ghost" && "border-transparent bg-transparent text-graphite hover:text-ink hover:bg-wash",
+        variant === "ghost" && "border-transparent bg-transparent text-graphite hover:bg-wash hover:text-ink",
         className
       )}
     />
   );
 }
 
-export function Badge({ className, children }: { className?: string; children: React.ReactNode }) {
+export function Badge({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
   return (
     <span
       className={cn(
@@ -37,7 +51,11 @@ export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`w-full rounded-md border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-muted focus:outline-none focus:border-terracotta ${props.className ?? ""}`}
+      className={cn(
+        "w-full rounded-md border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-muted",
+        "focus:border-terracotta focus:outline-none",
+        props.className
+      )}
     />
   );
 }

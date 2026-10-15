@@ -5,32 +5,58 @@
 :root {
   --paper: #FBFBF9;
   --ink: #1F1E1D;
+  --terracotta: #C96442;
 }
 
-html, body {
-  background: #FBFBF9;
-  color: #1F1E1D;
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: "Plus Jakarta Sans", Manrope, Inter, system-ui, sans-serif;
-}
-
-.font-serif {
-  font-family: Georgia, "Cormorant Garamond", "Playfair Display", "Times New Roman", serif;
+  font-family: var(--font-sans, "Plus Jakarta Sans"), Manrope, Inter, system-ui, sans-serif;
 }
 
 ::selection {
-  background: #C96442;
+  background: var(--terracotta);
   color: #fff;
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 2px;
+}
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Editorial long-form reading measure. */
 .prose-book p {
-  margin-bottom: 1.1em;
+  margin-bottom: 1.15em;
   line-height: 1.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }

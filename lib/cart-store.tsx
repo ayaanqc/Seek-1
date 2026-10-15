@@ -1,17 +1,23 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { BOOKS } from "./books-data";
+import { MAX_QTY } from "./checkout-logic";
 import type { Book, CartItem } from "./types";
 
-interface Toast {
+export interface Toast {
   id: number;
   message: string;
 }
 
+export interface DetailedItem {
+  book: Book;
+  quantity: number;
+}
+
 interface CartContextValue {
   items: CartItem[];
-  detailed: { book: Book; quantity: number }[];
+  detailed: DetailedItem[];
   count: number;
   subtotal: number;
   isBagOpen: boolean;
@@ -29,6 +35,28 @@ interface CartContextValue {
 const CartContext = createContext<CartContextValue | null>(null);
 
 const STORAGE_KEY = "marginalia-bag-v1";
+const TOAST_MS = 2400;
+
+function clampQty(qty: number): number {
+  if (!Number.isFinite(qty)) return 1;
+  return Math.min(MAX_QTY, Math.max(1, Math.floor(qty)));
+}
+
+/** Drop anything from storage that isn't a known book with a sane quantity. */
+function sanitize(raw: unknown): CartItem[] {
+  if (!Array.isArray(raw)) return [];
+  const seen = new Set<string>();
+  const out: CartItem[] = [];
+  for (const entry of raw) {
+    if (typeof entry !== "object" || entry === null) continue;
+    const { bookId, quantity } = entry as Partial<CartItem>;
+    if (typeof bookId !== "string" || seen.has(bookId)) continue;
+    if (!BOOKS.some((b) => b.id === bookId)) continue;
+    seen.add(bookId);
+    out.push({ bookId, quantity: clampQty(Number(quantity)) });
+  }
+  return out;
+}
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -36,43 +64,62 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
   const [readerId, setReaderId] = useState<string | null>(null);
 
+  const timers = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
+  const hydrated = useRef(false);
+
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as CartItem[];
-        if (Array.isArray(parsed)) setItems(parsed.filter((i) => BOOKS.some((b) => b.id === i.bookId)));
-      }
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      if (raw) setItems(sanitize(JSON.parse(raw)));
     } catch {
-      // ignore
+      // Corrupt storage is not fatal — start from an empty bag.
+    } finally {
+      hydrated.current = true;
     }
   }, []);
 
   useEffect(() => {
+    if (!hydrated.current) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
     } catch {
-      // ignore
+      // Private mode / quota — the bag still works for this session.
     }
   }, [items]);
+
+  // Clear any pending toast timers on unmount.
+  useEffect(() => {
+    const map = timers.current;
+    return () => {
+      map.forEach((t) => clearTimeout(t));
+      map.clear();
+    };
+  }, []);
 
   const notify = useCallback((message: string) => {
     const id = Date.now() + Math.random();
     setToasts((t) => [...t, { id, message }]);
-    window.setTimeout(() => {
+    const timer = setTimeout(() => {
+      timers.current.delete(id);
       setToasts((t) => t.filter((x) => x.id !== id));
-    }, 2400);
+    }, TOAST_MS);
+    timers.current.set(id, timer);
   }, []);
 
   const add = useCallback(
     (bookId: string, qty = 1) => {
+      const book = BOOKS.find((b) => b.id === bookId);
+      if (!book) return;
       setItems((prev) => {
         const found = prev.find((i) => i.bookId === bookId);
-        if (found) return prev.map((i) => (i.bookId === bookId ? { ...i, quantity: Math.min(9, i.quantity + qty) } : i));
-        return [...prev, { bookId, quantity: qty }];
+        if (found) {
+          return prev.map((i) =>
+            i.bookId === bookId ? { ...i, quantity: clampQty(i.quantity + qty) } : i
+          );
+        }
+        return [...prev, { bookId, quantity: clampQty(qty) }];
       });
-      const book = BOOKS.find((b) => b.id === bookId);
-      notify(book ? `Added “${book.title}” to bag` : "Added to bag");
+      notify(`Added \u201C${book.title}\u201D to bag`);
     },
     [notify]
   );
@@ -82,25 +129,27 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const setQty = useCallback((bookId: string, qty: number) => {
-    setItems((prev) =>
-      qty <= 0
-        ? prev.filter((i) => i.bookId !== bookId)
-        : prev.map((i) => (i.bookId === bookId ? { ...i, quantity: Math.min(9, qty) } : i))
-    );
+    setItems((prev) => {
+      if (!Number.isFinite(qty) || qty <= 0) return prev.filter((i) => i.bookId !== bookId);
+      return prev.map((i) => (i.bookId === bookId ? { ...i, quantity: clampQty(qty) } : i));
+    });
   }, []);
 
   const clear = useCallback(() => setItems([]), []);
 
-  const detailed = useMemo(
-    () =>
-      items
-        .map((i) => ({ book: BOOKS.find((b) => b.id === i.bookId)!, quantity: i.quantity }))
-        .filter((d) => Boolean(d.book)),
-    [items]
-  );
+  const detailed = useMemo<DetailedItem[]>(() => {
+    const byId = new Map(BOOKS.map((b) => [b.id, b]));
+    return items.flatMap((i) => {
+      const book = byId.get(i.bookId);
+      return book ? [{ book, quantity: i.quantity }] : [];
+    });
+  }, [items]);
 
-  const count = useMemo(() => items.reduce((s, i) => s + i.quantity, 0), [items]);
-  const subtotal = useMemo(() => detailed.reduce((s, d) => s + d.book.price * d.quantity, 0), [detailed]);
+  const count = useMemo(() => items.reduce((sum, i) => sum + i.quantity, 0), [items]);
+  const subtotal = useMemo(
+    () => Math.round(detailed.reduce((sum, d) => sum + d.book.price * d.quantity, 0) * 100) / 100,
+    [detailed]
+  );
 
   const value: CartContextValue = {
     items,
