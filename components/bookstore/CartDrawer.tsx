@@ -100,7 +100,9 @@ export default function CartDrawer() {
     document.body.appendChild(a);
     a.click();
     a.remove();
-    URL.revokeObjectURL(url);
+    // Revoking synchronously can cancel the download in some browsers —
+    // give the navigation a tick to pick the blob up first.
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   if (!isBagOpen) return null;
@@ -144,7 +146,14 @@ export default function CartDrawer() {
                   {detailed.map(({ book, quantity }) => (
                     <li key={book.id} className="flex gap-3 rounded-md border border-line bg-white p-3">
                       <div className="relative h-20 w-14 shrink-0 overflow-hidden rounded border border-line">
-                        <Image src={book.coverUrl} alt="" fill className="object-cover" sizes="56px" />
+                        <Image
+                          src={book.coverUrl}
+                          alt=""
+                          fill
+                          className="object-cover"
+                          sizes="56px"
+                          quality={80}
+                        />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="truncate font-serif text-[15px] font-medium">{book.title}</p>

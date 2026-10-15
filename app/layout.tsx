@@ -24,7 +24,7 @@ const display = Playfair_Display({
 export const metadata: Metadata = {
   title: "MARGINALIA — Curated Literary Bookstore",
   description:
-    "Volume IV: Essential Dialectics & Selected Prose. A curated bookstore and reading salon with excerpts and staff marginalia.",
+    "A small, hand-kept shelf of 15 real volumes across philosophy, fiction, poetry, essays, architecture and design — each with a readable extract or an honest note from the shop.",
   keywords: ["bookstore", "literary", "essays", "marginalia", "reading salon"],
 };
 
@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${sans.variable} ${mono.variable} ${display.variable}`}>
       <body className="bg-paper text-ink antialiased">
         <a
-          href="#catalog"
+          href="#collection"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-md focus:border focus:border-ink focus:bg-white focus:px-3 focus:py-2 focus:text-sm"
         >
           Skip to catalog

@@ -24,7 +24,8 @@ export default function BookCard({ book }: { book: Book }) {
           src={book.coverUrl}
           alt={`Cover of ${book.title} by ${book.author}`}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 300px"
+          quality={85}
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
         <span className="pointer-events-none absolute inset-x-0 bottom-0 flex translate-y-2 items-center justify-center gap-1.5 bg-ink/75 py-2 font-mono text-[10px] uppercase tracking-[0.16em] text-paper opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:opacity-100">

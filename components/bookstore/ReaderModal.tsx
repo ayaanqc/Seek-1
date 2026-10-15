@@ -26,7 +26,6 @@ export default function ReaderModal() {
 
   const { reading } = book;
   const isExcerpt = reading.kind === "excerpt";
-  const textLabel = isExcerpt ? "Excerpt" : "Editor\u2019s Note";
 
   return (
     <div
@@ -58,7 +57,14 @@ export default function ReaderModal() {
           <div className="border-b border-line p-6 md:overflow-y-auto md:border-b-0 md:border-r">
             <div className="mb-4 flex gap-4">
               <div className="relative h-32 w-24 shrink-0 overflow-hidden rounded border border-line">
-                <Image src={book.coverUrl} alt={`Cover of ${book.title}`} fill className="object-cover" sizes="96px" />
+                <Image
+                  src={book.coverUrl}
+                  alt={`Cover of ${book.title}`}
+                  fill
+                  className="object-cover"
+                  sizes="96px"
+                  quality={90}
+                />
               </div>
               <div>
                 <div className="font-mono text-[11px] uppercase tracking-wide text-terracotta">

@@ -36,8 +36,10 @@ export default function Hero({
 }) {
   const [index, setIndex] = useState(0);
   const total = books.length;
-  const active = books[index];
   const step = (delta: number) => setIndex((i) => (i + delta + total) % total);
+
+  if (total === 0) return null;
+  const active = books[index];
 
   return (
     <section className="border-b border-line bg-cream">
@@ -103,7 +105,10 @@ export default function Hero({
               const isActive = abs === 0;
               return (
                 <button
-                  key={`${book.id}-${off}`}
+                  // Key by position, not by book: the five slots persist while
+                  // their covers change, so focus survives stepping and the
+                  // size/opacity transitions actually run.
+                  key={off}
                   type="button"
                   onClick={() => (isActive ? onOpen(book.id) : setIndex((index + off + total) % total))}
                   aria-label={isActive ? `Open ${book.title}` : `Bring ${book.title} to the front`}
@@ -115,7 +120,16 @@ export default function Hero({
                     src={book.coverUrl}
                     alt={`Cover of ${book.title} by ${book.author}`}
                     fill
-                    sizes="240px"
+                    // Match the slot so the optimizer serves a 2x-capable file:
+                    // centre 232px, neighbours 171px, far edges 118px.
+                    sizes={
+                      abs === 0
+                        ? "(max-width: 640px) 197px, 232px"
+                        : abs === 1
+                          ? "(max-width: 640px) 145px, 171px"
+                          : "118px"
+                    }
+                    quality={90}
                     priority={isActive}
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
                   />

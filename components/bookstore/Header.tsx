@@ -56,7 +56,7 @@ export default function Header() {
             aria-hidden
             className="transition-transform duration-200 ease-out group-hover:-rotate-6 group-hover:scale-110"
           />
-          Bag{""}
+          Bag{" "}
           <span key={count} className="inline-block animate-pop font-mono tabular-nums">
             ({count})
           </span>
@@ -64,7 +64,7 @@ export default function Header() {
       </div>
 
       <nav
-        aria-label="Sections"
+        aria-label="Sections (mobile)"
         className="no-scrollbar flex gap-6 overflow-x-auto border-t border-line px-4 py-2.5 md:hidden"
       >
         {NAV.map((n) => (
