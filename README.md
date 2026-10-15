@@ -4,10 +4,12 @@ Editorial bookstore and reading salon built for zero-config deployment on Vercel
 Warm parchment canvas, deep-aubergine evening bands, serif display type, monospace metadata,
 terracotta accents.
 
-Fifteen **real** books across six shelves. Cover art comes from the Open Library Covers API;
-every extract is verbatim public-domain text pulled from Project Gutenberg. Where a book is
-still in copyright the reader panel says so and shows an original note written by the shop
-instead of a fabricated quotation.
+Fifteen **real** books across six shelves. Cover art is vendored under `public/covers/`
+from the Open Library Covers API (same verified editions, pinned as files, served with
+immutable caching) — the shelf loads with zero cover-proxy hops and no dependency on the
+OL/archive.org redirect chain at request time. Every extract is verbatim public-domain
+text pulled from Project Gutenberg. Where a book is still in copyright the reader panel
+says so and shows an original note written by the shop instead of a fabricated quotation.
 
 ## Quick start
 
@@ -27,25 +29,26 @@ Individually:
 | Command             | What it does                                                       |
 | :------------------ | :----------------------------------------------------------------- |
 | `npm run typecheck` | `tsc --noEmit` across app **and** tests                             |
-| `npm test`          | 30 unit tests (node:test) over the data, query and checkout logic  |
+| `npm test`          | 31 unit tests (node:test) over the data, query and checkout logic  |
 | `npm run build`     | Production build + lint + type check                               |
 
 ## 60-second evaluation flow
 
-1. **Land on the hero** — an aubergine masthead with a fanned stack of real cover art, then
-   *"Curated for curious readers"*: four featured volumes across four shelves.
-2. **Filter & search** — click `Poetry`, or type `woolf` / `design`. The grid updates instantly
-   (no reload) with a live `Showing N of 15` counter.
-3. **Inspect a volume** — click a card's `Sample Excerpt` (e.g. *Walden*) to open the reader:
+1. **Land on the hero** — *"Discover & read 15 kept volumes"* with a working search bar
+   (category select + query) and a cover carousel: arrows cycle the shelf, side covers
+   bring themselves forward, the centre cover opens the reader.
+2. **Filter & search** — click the `Poetry` category card, or type `woolf` / `design` in the
+   hero search. The grid updates instantly (no reload) with a live `Showing N of 15` counter.
+3. **Inspect a volume** — click a card's `Extract` (e.g. *Walden*) to open the reader:
    the extract on the left with its Gutenberg credit, **Staff Marginalia** on the right.
    Open *Orbital* instead and the same panel reads `Editor's Note` — because that book is still
    in copyright and the shop will not invent a quote for it.
-4. **Add to the bag** — `Add to Reading Bag`, or `Quick Add` straight from the grid. The header
-   `Bag (n)` counter and a toast confirm it.
+4. **Add to the bag** — `Add to Reading Bag`, or `Buy now` straight from the grid. The header
+   `Bag (n)` counter kicks, turns terracotta, and a toast confirms it.
 5. **Check out** — open the bag, adjust quantities, `Complete Purchase`, enter dummy shipping →
    processing → a **dispatch ticket with order ID and tracking code** and a downloadable receipt.
-6. **Reserve a seat** — the evening **salon** band at the foot of the page has a working RSVP:
-   the seat count drops from 24 and the button flips to *Seat reserved — release*.
+6. **Reserve a seat** — the **salon** strip above the reviews has a working RSVP:
+   the seat count drops from 24 and the button flips to *Reserved — release*.
 
 Empty and error states are handled too: an unmatched search shows a `Clear filters` state, and
 bad shipping input is validated inline.

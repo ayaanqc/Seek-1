@@ -44,7 +44,7 @@ export default function Hero({
   return (
     <section className="border-b border-line bg-cream">
       <div className="mx-auto max-w-6xl px-4 pb-12 pt-12 sm:pt-16">
-        <p className="text-center font-mono text-[11px] uppercase tracking-[0.24em] text-terracotta">
+        <p className="text-center font-mono text-[11px] uppercase tracking-[0.24em] text-terracotta-ink">
           A curated bookstore &amp; reading salon
         </p>
         <h2 className="mx-auto mt-3 max-w-3xl text-center font-serif text-[33px] font-semibold leading-[1.08] tracking-tight sm:text-[46px]">
@@ -85,7 +85,7 @@ export default function Hero({
 
           <button
             type="submit"
-            aria-label="Show matching volumes"
+            aria-label="Search"
             className="group inline-flex items-center gap-2 bg-ink px-4 text-sm font-medium text-paper transition duration-150 ease-out hover:bg-terracotta active:bg-terracotta-deep"
           >
             <Search

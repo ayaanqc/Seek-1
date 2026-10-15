@@ -35,7 +35,7 @@ export default function CategoryGrid({
       <div className="mx-auto max-w-6xl px-4 py-12">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-terracotta">Browse</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-terracotta-ink">Browse</p>
             <h2 className="mt-2 font-serif text-[27px] font-semibold tracking-tight sm:text-[32px]">
               Explore categories
             </h2>

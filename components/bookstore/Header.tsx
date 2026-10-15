@@ -47,7 +47,7 @@ export default function Header() {
           aria-label={`Open reading bag, ${count} item${count === 1 ? "" : "s"}`}
           className={`group inline-flex shrink-0 items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium text-paper transition duration-150 ease-out hover:-translate-y-px hover:shadow-book active:translate-y-0 active:scale-[0.97] ${
             count > 0
-              ? "border-terracotta bg-terracotta hover:border-terracotta-deep hover:bg-terracotta-deep"
+              ? "border-terracotta-deep bg-terracotta-deep hover:border-terracotta-ink hover:bg-terracotta-ink"
               : "border-ink bg-ink hover:border-terracotta hover:bg-terracotta"
           }`}
         >

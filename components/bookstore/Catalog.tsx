@@ -65,11 +65,11 @@ export default function Catalog() {
         }}
       />
 
-      <section id="collection" className="scroll-mt-4">
+      <main id="collection" className="scroll-mt-4">
         <div className="mx-auto max-w-6xl px-4 py-12">
           <div className="mb-6 flex flex-col gap-4 border-b border-line pb-6 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-terracotta">The shelf</p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-terracotta-ink">The shelf</p>
               <h2 className="mt-2 font-serif text-[27px] font-semibold tracking-tight sm:text-[32px]">
                 Deciding what to read next?
               </h2>
@@ -151,7 +151,7 @@ export default function Catalog() {
             </div>
           )}
         </div>
-      </section>
+      </main>
 
       <EventStrip />
       <Reviews />

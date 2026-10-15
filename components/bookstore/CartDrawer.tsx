@@ -67,7 +67,7 @@ export default function CartDrawer() {
       const data = (await res.json().catch(() => ({}))) as { order?: Order; error?: string };
       if (!res.ok || !data.order) throw new Error(data.error ?? "Checkout failed");
       // Brief simulated processing so the state change is perceptible.
-      await new Promise((r) => setTimeout(r, 700));
+      await new Promise((r) => setTimeout(r, 350));
       setOrder(data.order);
       setStage("receipt");
       clear();
@@ -250,7 +250,7 @@ export default function CartDrawer() {
               ))}
             </div>
             {error && (
-              <p role="alert" className="mt-2 text-[13px] text-terracotta-deep">
+              <p role="alert" className="mt-2 text-[13px] text-terracotta-ink">
                 {error}
               </p>
             )}

@@ -67,7 +67,7 @@ export default function ReaderModal() {
                 />
               </div>
               <div>
-                <div className="font-mono text-[11px] uppercase tracking-wide text-terracotta">
+                <div className="font-mono text-[11px] uppercase tracking-wide text-terracotta-ink">
                   {book.category} &middot; {formatYear(book.year)}
                 </div>
                 <h2 className="font-serif text-2xl font-semibold leading-tight">{book.title}</h2>

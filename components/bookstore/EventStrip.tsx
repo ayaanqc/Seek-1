@@ -23,7 +23,7 @@ export default function EventStrip() {
         <div className="flex items-center gap-3">
           <CalendarDays size={20} className="shrink-0 text-cream/60" aria-hidden />
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-cream/60">Next event</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-cream/75">Next event</p>
             <p className="font-serif text-[17px] font-medium">
               An Evening of Slow Reading &middot; Thu 24 Oct, 7:00 PM
             </p>
@@ -31,7 +31,7 @@ export default function EventStrip() {
         </div>
 
         <div className="flex items-center gap-4">
-          <span aria-live="polite" className="font-mono text-[11px] uppercase tracking-wide text-cream/60">
+          <span aria-live="polite" className="font-mono text-[11px] uppercase tracking-wide text-cream/75">
             <span key={seatsLeft} className="inline-block animate-pop tabular-nums text-cream">
               {seatsLeft}
             </span>{" "}

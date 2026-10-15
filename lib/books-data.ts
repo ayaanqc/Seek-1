@@ -11,10 +11,12 @@ import {
 /**
  * A curated shelf of real books.
  *
- * ISBNs and cover art come from the Open Library Covers API, so they identify
- * real print editions (the cover art and the ISBN may occasionally belong to
- * different printings of the same title). Prices, stock and the shop itself are
- * fictional.
+ * Cover art is vendored under public/covers/ from the Open Library Covers
+ * API (same verified editions as before, now pinned as files). Serving them
+ * locally means the shelf no longer depends on the OL/archive.org redirect
+ * chain at request time — no image-proxy latency, no flaky 500s, and
+ * immutable caching. ISBNs below still identify the real print editions.
+ * Prices, stock and the shop itself are fictional.
  *
  * `reading.kind` is "excerpt" only where the text is verifiably in the public
  * domain and the passage is reproduced verbatim from Project Gutenberg. For
@@ -29,7 +31,7 @@ export const BOOKS: Book[] = [
     author: "Samantha Harvey",
     year: 2023,
     price: 27,
-    coverUrl: "https://covers.openlibrary.org/b/id/15175904-L.jpg",
+    coverUrl: "/covers/orbital.jpg",
     category: "Fiction",
     isbn: "9781529922936",
     pages: 144,
@@ -57,7 +59,7 @@ export const BOOKS: Book[] = [
     author: "Miranda July",
     year: 2024,
     price: 29,
-    coverUrl: "https://covers.openlibrary.org/b/id/15204747-L.jpg",
+    coverUrl: "/covers/all-fours.jpg",
     category: "Fiction",
     isbn: "9781838853488",
     pages: 400,
@@ -85,7 +87,7 @@ export const BOOKS: Book[] = [
     author: "Rick Rubin",
     year: 2023,
     price: 32,
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780593653425-L.jpg",
+    coverUrl: "/covers/the-creative-act.jpg",
     category: "Design",
     isbn: "9780593653425",
     pages: 432,
@@ -113,7 +115,7 @@ export const BOOKS: Book[] = [
     author: "Aldo Rossi",
     year: 1966,
     price: 42,
-    coverUrl: "https://covers.openlibrary.org/b/id/10327621-L.jpg",
+    coverUrl: "/covers/the-architecture-of-the-city.jpg",
     category: "Architecture",
     isbn: "9780262181013",
     pages: 205,
@@ -141,7 +143,7 @@ export const BOOKS: Book[] = [
     author: "Marcus Aurelius",
     year: 180,
     price: 18,
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780140449334-L.jpg",
+    coverUrl: "/covers/meditations.jpg",
     category: "Philosophy",
     isbn: "9780140449334",
     pages: 254,
@@ -167,7 +169,7 @@ export const BOOKS: Book[] = [
     author: "Virginia Woolf",
     year: 1925,
     price: 19,
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780156628709-L.jpg",
+    coverUrl: "/covers/mrs-dalloway.jpg",
     category: "Fiction",
     isbn: "9780156628709",
     pages: 240,
@@ -195,7 +197,7 @@ export const BOOKS: Book[] = [
     author: "Kaveh Akbar",
     year: 2024,
     price: 28,
-    coverUrl: "https://covers.openlibrary.org/b/id/14562207-L.jpg",
+    coverUrl: "/covers/martyr.jpg",
     category: "Fiction",
     isbn: "9780593537619",
     pages: 352,
@@ -222,7 +224,7 @@ export const BOOKS: Book[] = [
     author: "Jun'ichir\u014d Tanizaki",
     year: 1933,
     price: 17,
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780099283577-L.jpg",
+    coverUrl: "/covers/in-praise-of-shadows.jpg",
     category: "Architecture",
     isbn: "9780099283577",
     pages: 100,
@@ -249,7 +251,7 @@ export const BOOKS: Book[] = [
     author: "Robin Wall Kimmerer",
     year: 2024,
     price: 24,
-    coverUrl: "https://covers.openlibrary.org/b/id/14827078-L.jpg",
+    coverUrl: "/covers/the-serviceberry.jpg",
     category: "Essays",
     isbn: "9781668072257",
     pages: 128,
@@ -276,7 +278,7 @@ export const BOOKS: Book[] = [
     author: "Walt Whitman",
     year: 1855,
     price: 15,
-    coverUrl: "https://covers.openlibrary.org/b/id/9000447-L.jpg",
+    coverUrl: "/covers/leaves-of-grass.jpg",
     category: "Poetry",
     isbn: "9780451524850",
     pages: 384,
@@ -301,7 +303,7 @@ export const BOOKS: Book[] = [
     author: "George Saunders",
     year: 2021,
     price: 20,
-    coverUrl: "https://covers.openlibrary.org/b/id/12451689-L.jpg",
+    coverUrl: "/covers/a-swim-in-a-pond-in-the-rain.jpg",
     category: "Essays",
     isbn: "9781984856029",
     pages: 417,
@@ -328,7 +330,7 @@ export const BOOKS: Book[] = [
     author: "W. E. B. Du Bois",
     year: 1903,
     price: 14,
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780140189988-L.jpg",
+    coverUrl: "/covers/the-souls-of-black-folk.jpg",
     category: "Essays",
     isbn: "9780140189988",
     pages: 206,
@@ -353,7 +355,7 @@ export const BOOKS: Book[] = [
     author: "Robert Bringhurst",
     year: 1992,
     price: 38,
-    coverUrl: "https://covers.openlibrary.org/b/id/13236790-L.jpg",
+    coverUrl: "/covers/the-elements-of-typographic-style.jpg",
     category: "Design",
     isbn: "9780881792126",
     pages: 398,
@@ -380,7 +382,7 @@ export const BOOKS: Book[] = [
     author: "Henry David Thoreau",
     year: 1854,
     price: 16,
-    coverUrl: "https://covers.openlibrary.org/b/isbn/9780486284958-L.jpg",
+    coverUrl: "/covers/walden.jpg",
     category: "Philosophy",
     isbn: "9780486284958",
     pages: 224,
@@ -405,7 +407,7 @@ export const BOOKS: Book[] = [
     author: "Kahlil Gibran",
     year: 1923,
     price: 13,
-    coverUrl: "https://covers.openlibrary.org/b/id/14039410-L.jpg",
+    coverUrl: "/covers/the-prophet.jpg",
     category: "Poetry",
     isbn: "9798432076724",
     pages: 112,

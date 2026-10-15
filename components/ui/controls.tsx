@@ -22,7 +22,7 @@ export function Button({ className, variant = "primary", size = "md", type = "bu
         size === "sm" ? "px-2.5 py-1.5 text-[12px]" : "px-4 py-2 text-sm",
         variant === "primary" && "border-ink bg-ink text-paper hover:border-terracotta hover:bg-terracotta",
         variant === "accent" &&
-          "border-terracotta bg-terracotta text-white hover:border-terracotta-deep hover:bg-terracotta-deep",
+          "border-terracotta-deep bg-terracotta-deep text-white hover:border-terracotta-ink hover:bg-terracotta-ink",
         variant === "outline" && "border-line bg-white text-ink hover:border-ink",
         variant === "ghost" && "border-transparent bg-transparent text-graphite hover:bg-wash hover:text-ink",
         className

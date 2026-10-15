@@ -35,7 +35,7 @@ export default function BookCard({ book }: { book: Book }) {
       </button>
 
       <div className="flex flex-1 flex-col p-4">
-        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-terracotta">{book.category}</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-terracotta-ink">{book.category}</p>
         <h3 className="mt-1 font-serif text-[16px] font-medium leading-snug transition-colors duration-150 group-hover:text-terracotta">
           {book.title}
         </h3>
@@ -45,7 +45,7 @@ export default function BookCard({ book }: { book: Book }) {
         </p>
 
         <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-2 border-t border-line pt-3">
-          <span className="font-mono text-[14px] font-semibold text-terracotta">{formatPrice(book.price)}</span>
+          <span className="font-mono text-[14px] font-semibold text-terracotta-ink">{formatPrice(book.price)}</span>
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"

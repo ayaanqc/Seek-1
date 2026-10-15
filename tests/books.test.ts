@@ -1,5 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { existsSync, statSync } from "node:fs";
+import { join } from "node:path";
 
 import { BOOKS, CATEGORIES, getBook } from "../lib/books-data";
 import { filterBooks, normalizeSort, matches, type BookQuery } from "../lib/books-query";
@@ -71,8 +73,8 @@ describe("catalog data integrity", () => {
       assert.ok(isValidIsbn13(b.isbn), `${at} ISBN-13 check digit is invalid: ${b.isbn}`);
       assert.match(
         b.coverUrl,
-        /^https:\/\/(covers\.openlibrary\.org|images\.unsplash\.com)\//,
-        `${at} cover must be served over https from the Open Library or Unsplash CDN`
+        /^(\/covers\/|https:\/\/(covers\.openlibrary\.org|images\.unsplash\.com)\/)/,
+        `${at} cover must be a vendored /covers/ file or https from the Open Library or Unsplash CDN`
       );
       assert.ok(["Hardcover", "Paperback"].includes(b.format), `${at} bad format`);
       assert.ok(b.synopsis.trim().length > 40, `${at} synopsis too short`);
@@ -114,6 +116,18 @@ describe("catalog data integrity", () => {
   it("returns undefined for unknown volumes instead of throwing", () => {
     assert.equal(getBook("does-not-exist"), undefined);
     assert.equal(getBook(""), undefined);
+  });
+
+  it("ships every vendored cover as a real file under public/", () => {
+    for (const b of BOOKS) {
+      const at = `[${b.id}]`;
+      if (!b.coverUrl.startsWith("/")) continue;
+      const file = join(process.cwd(), "public", b.coverUrl);
+      assert.ok(existsSync(file), `${at} missing vendored cover: ${file}`);
+      assert.ok(statSync(file).size > 4096, `${at} vendored cover looks truncated: ${file}`);
+    }
+    const vendored = BOOKS.filter((b) => b.coverUrl.startsWith("/covers/"));
+    assert.equal(vendored.length, BOOKS.length, "every cover should be vendored locally");
   });
 });
 

@@ -15,10 +15,16 @@ const config: Config = {
         cream: "#F4EFE5",
         ink: "#1F1E1D",
         graphite: "#6B6964",
-        muted: "#9A9892",
+        // #6E6C66 is the lightest grey that still clears 4.5:1 on paper —
+        // secondary metadata text lives here, so it has to pass.
+        muted: "#6E6C66",
         terracotta: {
           DEFAULT: "#C96442",
           deep: "#BC544B",
+          // Small text (eyebrows, prices, labels) in DEFAULT fails contrast
+          // on cream/paper, so it uses this darker cut instead. DEFAULT stays
+          // for large display type, icons, fills and borders.
+          ink: "#9C4227",
         },
         // Deep aubergine — the bookshop's evening colour, used for the hero and salon bands.
         plum: {
