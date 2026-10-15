@@ -35,6 +35,13 @@ body {
   outline-offset: 2px;
 }
 
+/* Tailwind v3 preflight leaves <button> with the default arrow cursor; make
+   everything clickable feel clickable. Disabled controls stay un-clickable. */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

@@ -107,12 +107,12 @@ export default function CartDrawer() {
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-ink/40" onClick={close} />
+      <div className="absolute inset-0 animate-fade-in bg-ink/40" onClick={close} />
       <aside
         role="dialog"
         aria-modal="true"
         aria-label={stage === "receipt" ? "Order confirmation" : "Shopping bag"}
-        className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-paper shadow-2xl"
+        className="absolute right-0 top-0 flex h-full w-full max-w-md animate-slide-in-right flex-col bg-paper shadow-2xl"
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <h2 className="font-serif text-xl font-semibold">
@@ -122,7 +122,7 @@ export default function CartDrawer() {
             type="button"
             onClick={close}
             aria-label="Close bag"
-            className="rounded-md border border-line p-1.5 hover:border-ink"
+            className="rounded-md border border-line p-1.5 transition duration-150 ease-out hover:border-terracotta hover:bg-wash hover:text-terracotta active:scale-90"
           >
             <X size={16} aria-hidden />
           </button>
@@ -156,7 +156,7 @@ export default function CartDrawer() {
                             <button
                               type="button"
                               onClick={() => setQty(book.id, quantity - 1)}
-                              className="rounded border border-line p-1 hover:border-ink"
+                              className="rounded border border-line p-1 transition duration-150 ease-out hover:border-terracotta hover:bg-wash hover:text-terracotta active:scale-90"
                               aria-label={`Decrease quantity of ${book.title}`}
                             >
                               <Minus size={12} aria-hidden />
@@ -168,7 +168,7 @@ export default function CartDrawer() {
                               type="button"
                               onClick={() => setQty(book.id, quantity + 1)}
                               disabled={quantity >= 9}
-                              className="rounded border border-line p-1 hover:border-ink disabled:opacity-40"
+                              className="rounded border border-line p-1 transition duration-150 ease-out hover:border-terracotta hover:bg-wash hover:text-terracotta active:scale-90 disabled:cursor-not-allowed disabled:opacity-40"
                               aria-label={`Increase quantity of ${book.title}`}
                             >
                               <Plus size={12} aria-hidden />
@@ -182,7 +182,7 @@ export default function CartDrawer() {
                       <button
                         type="button"
                         onClick={() => remove(book.id)}
-                        className="self-start p-1 text-muted hover:text-terracotta-deep"
+                        className="self-start rounded p-1 text-muted transition duration-150 ease-out hover:bg-terracotta/10 hover:text-terracotta-deep active:scale-90"
                         aria-label={`Remove ${book.title} from bag`}
                       >
                         <Trash2 size={14} aria-hidden />

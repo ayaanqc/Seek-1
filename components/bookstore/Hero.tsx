@@ -63,7 +63,7 @@ export default function Hero({
             id="hero-category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="max-w-[45%] border-r border-line bg-transparent px-3 py-3 text-[13px] text-graphite focus:outline-none"
+            className="max-w-[45%] border-r border-line bg-transparent px-3 py-3 text-[13px] text-graphite transition-colors duration-150 hover:text-ink focus:outline-none"
           >
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
@@ -84,9 +84,13 @@ export default function Hero({
           <button
             type="submit"
             aria-label="Show matching volumes"
-            className="inline-flex items-center gap-2 bg-ink px-4 text-sm font-medium text-paper transition-colors hover:bg-terracotta"
+            className="group inline-flex items-center gap-2 bg-ink px-4 text-sm font-medium text-paper transition duration-150 ease-out hover:bg-terracotta active:bg-terracotta-deep"
           >
-            <Search size={16} aria-hidden />
+            <Search
+              size={16}
+              aria-hidden
+              className="transition-transform duration-150 ease-out group-hover:scale-110"
+            />
             <span className="hidden sm:inline">Search</span>
           </button>
         </form>
@@ -103,7 +107,7 @@ export default function Hero({
                   type="button"
                   onClick={() => (isActive ? onOpen(book.id) : setIndex((index + off + total) % total))}
                   aria-label={isActive ? `Open ${book.title}` : `Bring ${book.title} to the front`}
-                  className={`relative shrink-0 overflow-hidden rounded-sm ring-1 ring-black/10 transition-all duration-300 ${SIZES[abs]} ${
+                  className={`group relative shrink-0 overflow-hidden rounded-sm ring-1 ring-black/10 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:opacity-100 hover:ring-2 hover:ring-terracotta ${SIZES[abs]} ${
                     abs === 2 ? "hidden opacity-50 sm:block" : ""
                   } ${abs === 1 ? "opacity-80" : ""} ${isActive ? "shadow-cover" : "shadow-book"}`}
                 >
@@ -113,7 +117,7 @@ export default function Hero({
                     fill
                     sizes="240px"
                     priority={isActive}
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
                   />
                 </button>
               );
@@ -124,17 +128,25 @@ export default function Hero({
             type="button"
             onClick={() => step(-1)}
             aria-label="Previous volume"
-            className="absolute left-0 top-1/2 -translate-y-1/2 rounded-md border border-line bg-white p-2 text-ink shadow-book transition-colors hover:border-terracotta hover:text-terracotta"
+            className="group absolute left-0 top-1/2 -translate-y-1/2 rounded-md border border-line bg-white p-2 text-ink shadow-book transition duration-150 ease-out hover:border-terracotta hover:bg-terracotta hover:text-white hover:shadow-lg active:scale-95"
           >
-            <ChevronLeft size={18} aria-hidden />
+            <ChevronLeft
+              size={18}
+              aria-hidden
+              className="transition-transform duration-150 ease-out group-hover:-translate-x-0.5"
+            />
           </button>
           <button
             type="button"
             onClick={() => step(1)}
             aria-label="Next volume"
-            className="absolute right-0 top-1/2 -translate-y-1/2 rounded-md border border-line bg-white p-2 text-ink shadow-book transition-colors hover:border-terracotta hover:text-terracotta"
+            className="group absolute right-0 top-1/2 -translate-y-1/2 rounded-md border border-line bg-white p-2 text-ink shadow-book transition duration-150 ease-out hover:border-terracotta hover:bg-terracotta hover:text-white hover:shadow-lg active:scale-95"
           >
-            <ChevronRight size={18} aria-hidden />
+            <ChevronRight
+              size={18}
+              aria-hidden
+              className="transition-transform duration-150 ease-out group-hover:translate-x-0.5"
+            />
           </button>
         </div>
 
@@ -146,10 +158,14 @@ export default function Hero({
           <button
             type="button"
             onClick={() => onOpen(active.id)}
-            className="mt-4 inline-flex items-center gap-2 rounded-md border border-ink bg-ink px-4 py-2 text-sm font-medium text-paper transition-colors hover:border-terracotta hover:bg-terracotta"
+            className="group mt-4 inline-flex items-center gap-2 rounded-md border border-ink bg-ink px-4 py-2 text-sm font-medium text-paper transition duration-150 ease-out hover:-translate-y-px hover:border-terracotta hover:bg-terracotta hover:shadow-book active:translate-y-0 active:scale-[0.97]"
           >
             {active.reading.kind === "excerpt" ? "Read the extract" : "Read the shop\u2019s note"}
-            <ChevronRight size={15} aria-hidden />
+            <ChevronRight
+              size={15}
+              aria-hidden
+              className="transition-transform duration-150 ease-out group-hover:translate-x-1"
+            />
           </button>
         </div>
       </div>

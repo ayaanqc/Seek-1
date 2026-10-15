@@ -41,6 +41,37 @@ const config: Config = {
         book: "0 1px 2px rgba(31,30,29,0.06), 0 8px 24px -12px rgba(31,30,29,0.18)",
         cover: "0 22px 48px -22px rgba(15,10,12,0.55), 0 2px 6px rgba(15,10,12,0.25)",
       },
+      keyframes: {
+        // Bag counter giving a small kick when the total changes.
+        pop: {
+          "0%": { transform: "scale(1)" },
+          "45%": { transform: "scale(1.35)" },
+          "100%": { transform: "scale(1)" },
+        },
+        "toast-in": {
+          from: { opacity: "0", transform: "translateY(10px) scale(0.97)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "panel-in": {
+          from: { opacity: "0", transform: "translateY(14px) scale(0.99)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "slide-in-right": {
+          from: { transform: "translateX(100%)" },
+          to: { transform: "translateX(0)" },
+        },
+        "fade-in": {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+      },
+      animation: {
+        pop: "pop 320ms ease-out",
+        "toast-in": "toast-in 220ms ease-out",
+        "panel-in": "panel-in 220ms ease-out",
+        "slide-in-right": "slide-in-right 240ms ease-out",
+        "fade-in": "fade-in 180ms ease-out",
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

@@ -30,14 +30,14 @@ export default function ReaderModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-ink/40 sm:items-center sm:p-6"
+      className="fixed inset-0 z-50 flex animate-fade-in items-end justify-center bg-ink/40 sm:items-center sm:p-6"
       onClick={() => setReaderId(null)}
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-label={`${isExcerpt ? "Excerpt" : "Editor's note"} and marginalia for ${book.title}`}
-        className="max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-t-lg bg-paper shadow-2xl sm:rounded-md"
+        className="max-h-[92vh] w-full max-w-4xl animate-panel-in overflow-hidden rounded-t-lg bg-paper shadow-2xl sm:rounded-md"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-3">
@@ -48,7 +48,7 @@ export default function ReaderModal() {
             type="button"
             onClick={() => setReaderId(null)}
             aria-label="Close reader"
-            className="rounded-md border border-line p-1.5 hover:border-ink"
+            className="rounded-md border border-line p-1.5 transition duration-150 ease-out hover:border-terracotta hover:bg-wash hover:text-terracotta active:scale-90"
           >
             <X size={16} aria-hidden />
           </button>

@@ -14,7 +14,10 @@ export function Button({ className, variant = "primary", size = "md", type = "bu
       type={type}
       {...props}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md border font-medium transition-colors",
+        "inline-flex items-center justify-center gap-2 rounded-md border font-medium",
+        "transition duration-150 ease-out",
+        "enabled:hover:-translate-y-px enabled:hover:shadow-book",
+        "enabled:active:translate-y-0 enabled:active:scale-[0.97]",
         "disabled:cursor-not-allowed disabled:opacity-50",
         size === "sm" ? "px-2.5 py-1.5 text-[12px]" : "px-4 py-2 text-sm",
         variant === "primary" && "border-ink bg-ink text-paper hover:border-terracotta hover:bg-terracotta",

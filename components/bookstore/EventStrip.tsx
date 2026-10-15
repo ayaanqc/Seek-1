@@ -31,29 +31,39 @@ export default function EventStrip() {
         </div>
 
         <div className="flex items-center gap-4">
-          <span
-            aria-live="polite"
-            className="font-mono text-[11px] uppercase tracking-wide text-cream/60"
-          >
-            {seatsLeft} of {CAPACITY} seats
+          <span aria-live="polite" className="font-mono text-[11px] uppercase tracking-wide text-cream/60">
+            <span key={seatsLeft} className="inline-block animate-pop tabular-nums text-cream">
+              {seatsLeft}
+            </span>{" "}
+            of {CAPACITY} seats
           </span>
           <button
             type="button"
             onClick={toggle}
             aria-pressed={reserved}
-            className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-[13px] font-medium transition-colors ${
+            className={`group inline-flex items-center gap-2 rounded-md px-4 py-2 text-[13px] font-medium transition duration-150 ease-out hover:-translate-y-px hover:shadow-lg active:translate-y-0 active:scale-[0.97] ${
               reserved
-                ? "text-cream ring-1 ring-inset ring-cream/50 hover:bg-cream/10"
+                ? "text-cream ring-1 ring-inset ring-cream/50 hover:bg-cream/15 hover:ring-cream/80"
                 : "bg-cream text-plum hover:bg-white"
             }`}
           >
             {reserved ? (
               <>
-                <Check size={15} aria-hidden /> Reserved &mdash; release
+                <Check
+                  size={15}
+                  aria-hidden
+                  className="animate-pop transition-transform duration-200 ease-out group-hover:scale-110"
+                />{" "}
+                Reserved &mdash; release
               </>
             ) : (
               <>
-                Reserve a seat <ArrowRight size={15} aria-hidden />
+                Reserve a seat{" "}
+                <ArrowRight
+                  size={15}
+                  aria-hidden
+                  className="transition-transform duration-150 ease-out group-hover:translate-x-1"
+                />
               </>
             )}
           </button>

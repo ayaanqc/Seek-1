@@ -91,8 +91,8 @@ export default function Catalog() {
                     type="button"
                     onClick={() => setFormat(f)}
                     aria-pressed={format === f}
-                    className={`px-3 py-1.5 text-[13px] font-medium transition-colors ${
-                      format === f ? "bg-ink text-paper" : "text-graphite hover:text-ink"
+                    className={`px-3 py-1.5 text-[13px] font-medium transition duration-150 ease-out active:scale-[0.97] ${
+                      format === f ? "bg-ink text-paper" : "text-graphite hover:bg-wash hover:text-ink"
                     }`}
                   >
                     {f}
@@ -100,13 +100,17 @@ export default function Catalog() {
                 ))}
               </div>
 
-              <label className="flex items-center gap-1 rounded-md border border-line bg-white px-2 py-1.5 text-[13px]">
-                <ArrowUpDown size={14} className="text-muted" aria-hidden />
+              <label className="group flex items-center gap-1 rounded-md border border-line bg-white px-2 py-1.5 text-[13px] transition-colors duration-150 hover:border-terracotta focus-within:border-terracotta">
+                <ArrowUpDown
+                  size={14}
+                  aria-hidden
+                  className="text-muted transition-all duration-200 ease-out group-hover:scale-110 group-hover:text-terracotta"
+                />
                 <span className="sr-only">Sort volumes</span>
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as SortKey)}
-                  className="bg-transparent focus:outline-none"
+                  className="cursor-pointer bg-transparent focus:outline-none"
                 >
                   <option value="curated">Curated</option>
                   <option value="newest">Newest</option>
@@ -179,7 +183,10 @@ export default function Catalog() {
         className="pointer-events-none fixed bottom-4 left-1/2 z-[60] flex -translate-x-1/2 flex-col items-center gap-2 px-4"
       >
         {toasts.map((t) => (
-          <div key={t.id} className="rounded-md border border-ink bg-ink px-4 py-2 text-sm text-paper shadow-lg">
+          <div
+            key={t.id}
+            className="animate-toast-in rounded-md border border-ink bg-ink px-4 py-2 text-sm text-paper shadow-lg"
+          >
             {t.message}
           </div>
         ))}
